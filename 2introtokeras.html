@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">8. Evaluating the Neural Networks</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1>Introduction to Keras</h1>
+          <p>Keras is a high level, very powerful, and easy to use library for deep learning in Python.
+              It runs on top of multiple other libraries and uses them as a backend, such as Tensorflow or 
+              Theano. I will be using a Tensorflow backend, but it should run the same no matter what 
+              backend is used. </p>
+          
+          <h3>Useful Resources</h3>
+          <p><a href="https://keras.io/getting-started/sequential-model-guide/">Keras Sequential model guide</a></p>
+
+          <h2>Models in Keras</h2>
+          <p>Models (or networks) in Keras are defined as a sequence of layers. A Sequential model is
+              created first and layers are added one at a time until you are happy with the network topology. </p>
+
+          <h3>Example of defined, compiled, fit and tested model (after data is preprocessed and libraries imported)</h3>
+          
+          <pre><code class="lang-python">
+    X = test_samples #shape is 100 rows by 8 columns
+    Y = test_labels #shape is 100 by 3 (one-hot encoding)
+    X_val = validation_samples
+    Y_val = validation_labels
+
+    model = Sequential()
+    model.add(Dense(12, input_dim=8, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(3, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.fit(X, Y, epochs=150, batch_size=10)
+    scores = model.evaluate(X, Y)
+            </code></pre>
+
+          <h3>Defining the network structure</h3>
+          <p>Lets say we have 100 samples and 8 variables per sample and there are 3 possible categories to which the samples belong. We also have a small set of samples set aside for validation of the model. Lets build a simple fully connected network structure. I will go through the above code step by step</p>
+          <ol>
+              <li>Define the data. X and Y are the training data. They will be used to train the model. X_val and Y_val, are samples from the same dataset that were set aside for testing the model&#39;s accuracy. They are not used in the training process (more on how and why to do this later). </li>
+          
+            <pre><code class="lang-python">
+    X = test_samples #shape is 100 rows by 8 columns
+    Y = test_labels #shape is 100 by 3 (one-hot encoding)
+    X_val = validation_samples
+    Y_val = validation_labels
+            </code></pre>
+
+            <li>Define the model as a sequential model
+                <pre><code class="lang-python">
+    model = Sequential()
+            </code></pre>
+            </li>
+            <li><p>Add the input and first hidden layers. Here we use a fully connected layer which is defined by the &#39;Dense&#39; class in Keras. We tell the model to create an input layer with 8 nodes by setting the <code>input_dim</code> variable to 8. The 12 tells it to create a Dense hidden layer with 12 nodes. The &#39;relu&#39; tells the layer to use the &#39;relu&#39; activation function (more on that later).</p>
+            <pre><code class="lang-python">
+    model.add(Dense(12, input_dim=8, activation='relu'))
+            </code></pre>
+            </li>
+            <li><p>Add another fully connected hidden layer. This time with 8 nodes, still with the relu activation function. Notice that we did not have to set the input dimension. You only set the input dimension for the first layer added. </p>
+            </li>
+
+            <pre><code class="lang-python">
+    model.add(Dense(8, activation='relu'))</code></pre>
+
+            <li><p>Add the output layer. It has 3 nodes, one for each possible category. It uses the &#39;softmax&#39; activation function (recommended for multi-class classification). </p>
+            <pre><code class="lang-python">
+    model.add(Dense(3, activation='softmax'))
+            </code></pre>
+            </li>
+            <li><p>Compile the model. Now that the network is defined, we have to compile it. This translates the model from Keras into the specific backend being used (Tensorflow in my case). </p>
+            <pre><code class="lang-python">
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+            </code></pre>
+            </li>
+            <li><p>Fit the model. This step is where the model is actually trained on the data. </p>
+            <pre><code class="lang-python">
+    model.fit(X, Y, epochs=150, batch_size=10)
+            </code></pre>
+            </li>
+            <li><p>Test the accuracy. Here we are testing the accuracy with the validatiion samples we kept out of the training dataset.   </p>
+            <pre><code class="lang-python">
+    scores = model.evaluate(X_val, Y_val)
+            </code></pre>
+            </li>
+            </ol>   
+          
+          <h2>Choices to be made when adding layers</h2>
+            <ol>
+            <li><p>There are many choices to be made when adding layers, starting with the type of layer to add. You can find out more about the existing layers <a href="https://keras.io/layers/about-keras-layers/">here</a> and you will learn more about the different layers and their options later. The main layers we are interested in are as follows:</p>
+            </li>
+            <ul>
+            <li><strong>Dense</strong> layer - a dense layer is a fully connected neural network layer</li>
+            <li><strong>Conv1D</strong> layer - a 1 dimensional convolutional layer</li>
+            <li><strong>Conv2D</strong> layer - a 2 dimensional convolutional layer</li>
+            <li><strong>MaxPooling1D</strong> layer - a 1 dimensional pooling layer</li>
+            <li><strong>MaxPooling2D</strong> layer - a 2 dimensional pooling layer</li>
+            <li><strong>Dropout</strong> layer - Dropout consists of randomly setting a fraction rate of input units to 0 at each update during training time, which helps prevent overfitting.
+            </li>
+            </ul>
+            <li><p>The <strong>activation function</strong>. The activation function is what decides whether or not a neuron/node should be activated. <a href="https://keras.io/activations/">Here are the available activation functions</a> The most popular ones are:</p>
+            </li>
+            <ul>
+            <li><strong>linear</strong> - default</li>
+            <li><strong>sigmoid</strong> - best with binary classification</li>
+            <li><strong>softmax</strong> - best with multi-class classification</li>
+            <li><strong>Tanh</strong> - hyperbolic tangent</li>
+            <li><strong>relu</strong> - most popular</li>
+            </ul>
+            </ol>
+
+          <h2>Choices to be made when compiling</h2>
+          <p>The compiling step prepares the model to be run by the backend. For this step we need to select a few options. <a href="https://keras.io/models/model/">Keras documentation on compile</a></p>
+<ol>
+<li>The <strong>loss or cost function.</strong> We need to select the function that is used by the optimizer to optimize the weights. The loss function is how the network measures its performance. <a href="https://keras.io/losses/">Here is a list of the available loss functions</a>. The most common are:</li>
+<ul>
+    <li>mean_squared_error - for regression</li>
+    <li>binary_crossentropy - for binary label predictions</li>
+    <li><p>categorical_crossentropy - for multi category label predictions</p>
+    </li>
+    </ul>
+<li>The <strong>optimizer</strong> algorithm that will be used to update the weights of the network. <a href="https://keras.io/optimizers/">Here is a list of the available optimizers</a>. The most common are:
+</li>
+<ul>
+<li>sgd - stochastic gradient descent, a fast variant of gradient descent</li>
+<li>RMSprop - more advanced</li>
+<li>adam - default, more advanced, includes a concept of momentum, most popular
+</li>
+</ul>
+<li>The <strong>metrics</strong> we want to evaluate the model on. This is not used to train the model, but gets printed out as it trains. <a href="https://keras.io/metrics/">Here is a list of the available metrics</a>. The most common is:
+</li>
+    <ul>
+<li>accuracy</li>
+        </ul>
+</ol>
+          
+<h2>Choices to be made when fitting the model</h2>
+<p>The fitting step trains the model on the input data. For this step we need to select a few options. <a href="https://keras.io/models/model/">Keras documentation on fit</a></p>
+<ol>
+<li><p><strong>epochs</strong> - this is the number of times the model is exposed to the training set. At each iteration the optimizer tries to adjust the weights so that the loss function is minimized</p>
+</li>
+<li><p><strong>batch_size</strong> - This is the number of training instances observed before the optimizer performs a weight update. </p>
+</li>
+</ol>
+          
+<h2>Other important information</h2>
+<h3>Input data</h3>
+<p>The input data (both samples and the labels) needs to be in the datatype format of &#39;float32&#39;. This can be set using the <code>.astype()</code> function from numpy. </p>
+<pre><code class="lang-python">
+    train_images = train_images.astype('float32')
+</code></pre>
+<p>The input labels can be converted from a simple list to one-hot encoding using the <code>to_categorical</code> function from keras. The labels should be in the format of a numpy array. </p>
+<pre><code class="lang-python">
+    from keras.utils import to_categorical
+    train_labels = to_categorical(train_labels)
+</code></pre>
+<p>When setting up the shape of your input data, the first axis is generally the &#39;samples&#39; axis. It should be equal to the number of samples in your data. The other values represent the shape of the samples. Example of a data set with 60,000 samples and each sample is a 28 by 28 matrix: </p>
+<pre><code class="lang-python">
+    print(train_images.shape)
+    (60000, 28, 28)
+</code></pre>
+<p>You may need to rearrange your input data into a new shape. This can be done with the <code>reshape()</code> function in numpy. This is applicable, for example, when using fully connected layers with image data. You may need to convert the image from a matrix to a vector.</p>
+<pre><code class="lang-python">
+    train_images = train_images.reshape((60000, 28 * 28))
+</code></pre>
+<p><strong>Please continue on to <a href=""">Multi-layer Perceptrons in Keras</a>.</strong></p>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
