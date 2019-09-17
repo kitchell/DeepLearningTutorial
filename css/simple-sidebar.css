@@ -32,6 +32,11 @@ h3 {
     font-weight: 400;
 }
 
+code {
+    color:black;
+    font-size: .75rem;
+}
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
