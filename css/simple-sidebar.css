@@ -112,7 +112,9 @@ background-color: #EBEDEF!important;
     border-color: black;
 }
 
-.btn-primary:hover{
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active{
     background-color: #1F618D;
     border-color: #1F618D;
 }
