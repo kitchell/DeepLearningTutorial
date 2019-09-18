@@ -92,15 +92,15 @@
 <p>There are many possible activation functions. See the <a href="https://keras.io/activations/">Keras documentation for a list of all of them</a>. The most commonly used functions are Sigmoid, Tanh, ReLU, and softmax. </p>
 <h2 id="sigmoid">Sigmoid</h2>
 <p>The sigmoid function 'squashes' the value so that it is between 0 and 1. It has the mathmatical formula: σ(x)=1/(1+e^(−x)). Large negative values will become 0, while large positive values will become 1. The sigmoid function is rarely used as the other functions typically do better. It is however often used with the output layer in binary classification. This is because it makes it easy to set a threshold (e.g. .5) for the two output categories. </p>
-<p><img class="center" src="http://cs231n.github.io/assets/nn1/sigmoid.jpeg" alt=""></p>
+<p><img class="center img-fluid" src="http://cs231n.github.io/assets/nn1/sigmoid.jpeg" alt=""></p>
 <h2 id="tanh">Tanh</h2>
 <p>The tanh function is similar to the sigmoid function (actually it is just a scaled sigmoid) except it is 0 centered and 'squashes' the values so they are between -1 and 1. It has the mathmatical formula: tanh(x)=2σ(2x)−1. </p>
-<p><img class="center" src="http://cs231n.github.io/assets/nn1/tanh.jpeg" alt=""></p>
+<p><img class="center img-fluid" src="http://cs231n.github.io/assets/nn1/tanh.jpeg" alt=""></p>
 <h2 id="relu">ReLU</h2>
 <p>The rectified linear unit (ReLU) function is one of the most popular activation functions. Its matmatical formula is: f(x)=max(0,x). Essentially the ReLU function sets every negative value to 0, making the activation threshold simply 0. </p>
-<p><img class="center" src="http://cs231n.github.io/assets/nn1/relu.jpeg" alt=""></p>
+<p><img class="center img-fluid" src="http://cs231n.github.io/assets/nn1/relu.jpeg" alt=""></p>
 <h2 id="softmax">Softmax</h2>
-<p>The softmax function is useful when doing multi-class classification. It is typically only used with the output layer. It is a type of sigmoid function and it 'squashes' the outputs for each class between 0 and 1 and divides by the sum of the outputs. It essentially gives the probability of the input being in a particular class. Its mathematical function is: <img src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2017/10/17014509/softmax.png" alt="">. </p>
+<p>The softmax function is useful when doing multi-class classification. It is typically only used with the output layer. It is a type of sigmoid function and it 'squashes' the outputs for each class between 0 and 1 and divides by the sum of the outputs. It essentially gives the probability of the input being in a particular class. Its mathematical function is: <img class="img-fluid" src="https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2017/10/17014509/softmax.png" alt="">. </p>
 
 <p><strong>Please continue on to <a href="6otherkerasfunctions.html">Other Useful Keras Functions</a>.</strong></p>
 

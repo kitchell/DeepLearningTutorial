@@ -84,14 +84,14 @@
           <hr>
 <p>A main goal of machine learning is to create models that <em>generalize</em>, meaning that they perform well on data that has not been seen before. To test the generalization power of a model you typically need to split your available data into three separate datasets: <strong>a training set, a validation set, and a testing set</strong>. You then train the model on the training data and evaluate its performance with the validation data. Once the model is sufficiently accurate, you test it a final time on the testing data. It is best to test it on a completely new third (testing) dataset to avoid overfitting to the validation data. When you are training the model, you are making descisions based on how accurately it classifies (or predicts etc.) the validation data. This inadvertently teaches the model what the validation data looks like and it is possible to overfit and overoptimize it for the validation data even if the model never sees the data in training.</p>
 <p>First, some terms:</p>
-<p><img class="center" src="https://cdn-images-1.medium.com/max/1600/1*tBErXYVvTw2jSUYK7thU2A.png" alt=""></p>
+<p><img class="center img-fluid" src="https://cdn-images-1.medium.com/max/1600/1*tBErXYVvTw2jSUYK7thU2A.png" alt=""></p>
 <h3 id="underfitting">Underfitting</h3>
 <p>Underfitting is when the model does not fit the training data very well and therefore cannot generalized to the validation or testing data. The model has poor predictive abilities and its accuracy is low. </p>
 <h3 id="overfitting">Overfitting</h3>
 <p>Overfitting is when the model fits the training or validation data too well. It becomes too specialized for that data and cannot generalize to new data. It has very high accuracy for the training data, but performs poorly when evaluated with new data. </p>
 <h2 id="splitting-the-data-">Splitting the data:</h2>
 <p>There are a couple of ways to split the data to help avoid these problems: </p>
-<p><img class="center" src="https://cdn-images-1.medium.com/max/1600/1*4G__SV580CxFj78o9yUXuQ.png" alt=""></p>
+<p><img class="center img-fluid" src="https://cdn-images-1.medium.com/max/1600/1*4G__SV580CxFj78o9yUXuQ.png" alt=""></p>
 <h2 id="hold-out-validation">Hold out validation</h2>
 <p>Hold out validation is simply splitting the data into multiple groups and &#39;holding&#39; one or more groups (testing/validation) &#39;out&#39; from training. This works ok, but sometime the split is not as random as we would like. </p>
 <h3 id="manually">Manually</h3>
@@ -152,7 +152,7 @@ X_train, X_val, y_train, <span class="hljs-attr">y_val</span> = train_test_split
 <h2 id="cross-validation">Cross Validation</h2>
 <p>Sometimes there is just not enough data to split into three useful groups. In this case, cross validation can be used. Cross validation is also useful for ensuring the data split is representative and not biased (by training on multiple subsets of data). </p>
 <p>Cross validation consists of splitting the data into subsets of data. You then train on all but one of those subsets and test on the subset that was held out. This is then repeated, but a different subset is held out each time, until each subset has been the &#39;test&#39; subset once. The final accuracy is the average accuracy of each training/testing round. </p>
-<p><img class="center"  style="width:80%" src="https://cdn-images-1.medium.com/max/1600/1*J2B_bcbd1-s1kpWOu_FZrg.png" alt=""></p>
+<p><img class="center img-fluid"  style="width:80%" src="https://cdn-images-1.medium.com/max/1600/1*J2B_bcbd1-s1kpWOu_FZrg.png" alt=""></p>
 <p>There are several types of cross validation. We will cover <strong>K-folds cross validation</strong>, <strong>Iterated K-folds cross validation</strong>, and <strong>Leave One Out cross validation</strong>.</p>
 <h3 id="k-folds-cross-validation">K-folds cross validation</h3>
 <p>K-folds cross validation consists of splitting the data into <em>k</em> subsets (folds) of equal size. The model is trained on <em>k-1</em> subsets and tested on the subset left out. This is repeated until all subsets are the testing subset at least once. The final accuracy of the model is the avearge accuracy of each training/testing round. </p>

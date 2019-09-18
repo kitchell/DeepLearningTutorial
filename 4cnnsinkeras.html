@@ -101,7 +101,7 @@
               In Keras, the convolution and activation layers can be added at the same time. CNNs are typically 
               used for images.</p>
         <p>Here is a typical CNN model architecture:</p>
-        <p><img class='center' src="https://camo.githubusercontent.com/b4c81c8d9f2915637d0ed7e40eae2837e38178c4/68747470733a2f2f616465736870616e6465332e6769746875622e696f2f6173736574732f5461626c652e706e67" alt=""></p>
+        <p><img class='center img-fluid' src="https://camo.githubusercontent.com/b4c81c8d9f2915637d0ed7e40eae2837e38178c4/68747470733a2f2f616465736870616e6465332e6769746875622e696f2f6173736574732f5461626c652e706e67" alt=""></p>
 
           <h2 id="convolutional-layer">Convolutional Layer</h2>
 
@@ -115,10 +115,10 @@
               image. Each convolutional layer has multiple filters and each filter produces a separate 
               activation or feature map. These activation maps are stacked together and passed to the next layer. </p>
           <p>For example, consider a 5 by 5 image (green) which only has values 0 or 1 and a 3 by 3 filter (yellow):  </p>
-          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-13-pm.png?w=127&amp;h=115" alt="image"> 
-              <br><img class='center' src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-24-pm.png?w=74&amp;h=64" alt="filter"></p>
+          <p><img class='center img-fluid'  src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-13-pm.png?w=127&amp;h=115" alt="image"> 
+              <br><img class='center img-fluid' src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-24-pm.png?w=74&amp;h=64" alt="filter"></p>
           <p>The convolution of the filter across the image would look like this:</p>
-          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/07/convolution_schematic.gif?w=268&amp;h=196" alt="image"></p>
+          <p><img class='center img-fluid'  src="https://ujwlkarn.files.wordpress.com/2016/07/convolution_schematic.gif?w=268&amp;h=196" alt="image"></p>
           <p>The filter is slid across the image by 1 pixel. At every position, the filter is first 
               multiplied elementwise with the pixels of the image and then the resulting values are summed 
               up to get a final integer which is then a single element of the output matrix (feature map). 
@@ -126,7 +126,7 @@
               <a href="https://keras.io/layers/convolutional/">Here is the keras documentation 
                   for convolutional layers</a> </p>
           <p>Here is a helpful graphic that shows the result of two different filters being convolved across an image:</p>
-          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/08/giphy.gif?w=400h=300" alt="image"></p>
+          <p><img class='center img-fluid'  src="https://ujwlkarn.files.wordpress.com/2016/08/giphy.gif?w=400h=300" alt="image"></p>
           <p>An important difference between CNNs and MLPs (Dense layers): An MLP/Dense/Fully connected layer learns global patterns in the input feature space, wheras a CNN/convolutional layer learns local patterns. If we were examining images, a Dense layer would learn patterns that involve all pixels of the image, while a convolutional layer would learn patterns within small windows of the image. </p>
           <p>In Keras, a convolutional layer is added by using a Conv1D (for 1D convolutions) or Conv2D (for 2D convolutions) layer:</p>
           <div class="code">
@@ -147,7 +147,7 @@ keras.layers.Conv2D(filters, kernel_size, <span class="hljs-attr">strides=(1,</s
         <h2 id="relu-layer">ReLU Layer</h2>
         <p>A ReLU layer is typically used after every convolution layer. In keras it can be added by setting the activation argument to &#39;relu&#39;. ReLU stands for rectified linear unit and it is a non-linear operation defined by max(zero, input). Essentially it sets all negative &#39;pixels&#39;/&#39;elements&#39; of the activation/feature maps to 0. Its purpose is to introduce non-linearity into the data, as real life data is likely to be non-linear. The convolution process is linear, so the ReLU function helps account for the non-linearity.</p>
         <p>This image may help visualize what the ReLU step is doing:</p>
-        <p><img class="center" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-18-19-pm.png?w=748" alt=""></p>
+        <p><img class="center img-fluid" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-18-19-pm.png?w=748" alt=""></p>
         <p>Other activation functions can be used besides ReLU, but ReLU has been found to typically perform the best. </p>
 
         <h2 id="pooling-layer">Pooling Layer</h2>
@@ -155,7 +155,7 @@ keras.layers.Conv2D(filters, kernel_size, <span class="hljs-attr">strides=(1,</s
         <p>Two types of pooling layers are Max and Average. Max pooling will take the largest number in a defined spatial neighborhood. Average pooling will take the average value of the spatial neighborhood. Max pooling is the type of pooling typically used, as it has been found to perform better. </p>
         <p>There are also Global versions of both of these types of pooling. Global (average or max) pooling is a more extreme method of dimensionality reduction, it averages the input into one value per feature map. A Global pooling layer is often added towards the end of a model, right before the Dense output layer. <a href="https://keras.io/layers/pooling/">Here is the keras documentation on Pooling layers</a>.</p>
         <p>Here's an example of how the Max and Sum (another type of pooling) layers look:</p>
-        <p><img class="center" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-11-53-pm.png?w=748" alt=""></p>
+        <p><img class="center img-fluid" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-11-53-pm.png?w=748" alt=""></p>
 
           <p>In Keras pooling layers are added with the following functions:</p>
           <pre><code class="lang-python">keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.MaxPooling1D</span>(pool_size=<span class="hljs-number">2</span>, strides=None, <span class="hljs-attribute">padding</span>=<span class="hljs-string">'valid'</span>)

@@ -109,8 +109,16 @@ background-color: #EBEDEF!important;
 
 .btn-primary {
     color:#EBEDEF;
+    border-color: black;
 }
 
+.btn-primary:hover{
+    background-color: #1F618D;
+    border-color: #1F618D;
+}
+.btn-primary:focus{
+    box-shadow: none;
+}
 .container-fluid {
 padding: 20px;
 
