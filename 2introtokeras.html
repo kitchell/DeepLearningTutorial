@@ -5,8 +5,8 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
 
   <title>Intro to Deep Learning</title>
 
@@ -29,16 +29,16 @@
       <div class="sidebar-heading">Deep Learning With Keras</div>
       <div class="list-group list-group-flush">
         <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">8. Evaluating the Neural Networks</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -94,69 +94,61 @@
 
           <h3>Example of defined, compiled, fit and tested model (after data is preprocessed and libraries imported)</h3>
           
-          <pre><code class="lang-python">
-    X = test_samples #shape is 100 rows by 8 columns
-    Y = test_labels #shape is 100 by 3 (one-hot encoding)
-    X_val = validation_samples
-    Y_val = validation_labels
+          <pre><code class="lang-python">X = test_samples #shape is 100 rows by 8 columns
+Y = test_labels #shape is 100 by 3 (one-hot encoding)
+X_val = validation_samples
+Y_val = validation_labels
 
-    model = Sequential()
-    model.add(Dense(12, input_dim=8, activation='relu'))
-    model.add(Dense(8, activation='relu'))
-    model.add(Dense(3, activation='softmax'))
+model = Sequential()
+model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(3, activation='softmax'))
 
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model.fit(X, Y, epochs=150, batch_size=10)
-    scores = model.evaluate(X, Y)
-            </code></pre>
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.fit(X, Y, epochs=150, batch_size=10)
+scores = model.evaluate(X, Y)
+</code></pre>
 
           <h3>Defining the network structure</h3>
           <p>Lets say we have 100 samples and 8 variables per sample and there are 3 possible categories to which the samples belong. We also have a small set of samples set aside for validation of the model. Lets build a simple fully connected network structure. I will go through the above code step by step</p>
           <ol>
               <li>Define the data. X and Y are the training data. They will be used to train the model. X_val and Y_val, are samples from the same dataset that were set aside for testing the model&#39;s accuracy. They are not used in the training process (more on how and why to do this later). </li>
           
-            <pre><code class="lang-python">
-    X = test_samples #shape is 100 rows by 8 columns
-    Y = test_labels #shape is 100 by 3 (one-hot encoding)
-    X_val = validation_samples
-    Y_val = validation_labels
-            </code></pre>
+            <pre><code class="lang-python">X = test_samples #shape is 100 rows by 8 columns
+Y = test_labels #shape is 100 by 3 (one-hot encoding)
+X_val = validation_samples
+Y_val = validation_labels
+</code></pre>
 
             <li>Define the model as a sequential model
-                <pre><code class="lang-python">
-    model = Sequential()
-            </code></pre>
+                <pre><code class="lang-python">model = Sequential()
+</code></pre>
             </li>
             <li><p>Add the input and first hidden layers. Here we use a fully connected layer which is defined by the &#39;Dense&#39; class in Keras. We tell the model to create an input layer with 8 nodes by setting the <code>input_dim</code> variable to 8. The 12 tells it to create a Dense hidden layer with 12 nodes. The &#39;relu&#39; tells the layer to use the &#39;relu&#39; activation function (more on that later).</p>
-            <pre><code class="lang-python">
-    model.add(Dense(12, input_dim=8, activation='relu'))
-            </code></pre>
+            <pre><code class="lang-python">model.add(Dense(12, input_dim=8, activation='relu'))
+</code></pre>
             </li>
             <li><p>Add another fully connected hidden layer. This time with 8 nodes, still with the relu activation function. Notice that we did not have to set the input dimension. You only set the input dimension for the first layer added. </p>
             </li>
 
-            <pre><code class="lang-python">
-    model.add(Dense(8, activation='relu'))</code></pre>
+            <pre><code class="lang-python">model.add(Dense(8, activation='relu'))
+</code></pre>
 
             <li><p>Add the output layer. It has 3 nodes, one for each possible category. It uses the &#39;softmax&#39; activation function (recommended for multi-class classification). </p>
-            <pre><code class="lang-python">
-    model.add(Dense(3, activation='softmax'))
-            </code></pre>
+            <pre><code class="lang-python">model.add(Dense(3, activation='softmax'))
+</code></pre>
             </li>
             <li><p>Compile the model. Now that the network is defined, we have to compile it. This translates the model from Keras into the specific backend being used (Tensorflow in my case). </p>
-            <pre><code class="lang-python">
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-            </code></pre>
+            <pre><code class="lang-python">model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+</code></pre>
             </li>
             <li><p>Fit the model. This step is where the model is actually trained on the data. </p>
-            <pre><code class="lang-python">
-    model.fit(X, Y, epochs=150, batch_size=10)
-            </code></pre>
+            <pre><code class="lang-python">model.fit(X, Y, epochs=150, batch_size=10)
+</code></pre>
             </li>
             <li><p>Test the accuracy. Here we are testing the accuracy with the validatiion samples we kept out of the training dataset.   </p>
-            <pre><code class="lang-python">
-    scores = model.evaluate(X_val, Y_val)
-            </code></pre>
+            <pre><code class="lang-python">scores = model.evaluate(X_val, Y_val)
+</code></pre>
             </li>
             </ol>   
           
@@ -221,24 +213,19 @@
 <h2>Other important information</h2>
 <h3>Input data</h3>
 <p>The input data (both samples and the labels) needs to be in the datatype format of &#39;float32&#39;. This can be set using the <code>.astype()</code> function from numpy. </p>
-<pre><code class="lang-python">
-    train_images = train_images.astype('float32')
-</code></pre>
+          <pre><code class="lang-python">train_images = train_images.astype('float32')</code></pre>
 <p>The input labels can be converted from a simple list to one-hot encoding using the <code>to_categorical</code> function from keras. The labels should be in the format of a numpy array. </p>
-<pre><code class="lang-python">
-    from keras.utils import to_categorical
-    train_labels = to_categorical(train_labels)
+          <pre><code class="lang-python">from keras.utils import to_categorical
+train_labels = to_categorical(train_labels)
 </code></pre>
 <p>When setting up the shape of your input data, the first axis is generally the &#39;samples&#39; axis. It should be equal to the number of samples in your data. The other values represent the shape of the samples. Example of a data set with 60,000 samples and each sample is a 28 by 28 matrix: </p>
-<pre><code class="lang-python">
-    print(train_images.shape)
-    (60000, 28, 28)
+          <pre><code class="lang-python">print(train_images.shape)
+(60000, 28, 28)
 </code></pre>
 <p>You may need to rearrange your input data into a new shape. This can be done with the <code>reshape()</code> function in numpy. This is applicable, for example, when using fully connected layers with image data. You may need to convert the image from a matrix to a vector.</p>
-<pre><code class="lang-python">
-    train_images = train_images.reshape((60000, 28 * 28))
+          <pre><code class="lang-python">train_images = train_images.reshape((60000, 28 * 28))
 </code></pre>
-<p><strong>Please continue on to <a href=#>Multi-layer Perceptrons in Keras</a>.</strong></p>
+<p><strong>Please continue on to <a href=3mlpsinkeras.html>Multi-layer Perceptrons in Keras</a>.</strong></p>
       </div>
     </div>
     <!-- /#page-content-wrapper -->

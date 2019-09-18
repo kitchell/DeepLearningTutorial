@@ -35,6 +35,16 @@ h3 {
 code {
     color:black;
     font-size: .75rem;
+    background-color: #EBEDEF
+}
+
+.code {
+    overflow: auto;
+}
+
+pre {
+    background-color: #EBEDEF;
+    padding: 20px;
 }
 
 #sidebar-wrapper {

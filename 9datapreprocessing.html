@@ -79,38 +79,40 @@
       </nav>
 
       <div class="container-fluid">
-        <h1 class="mt-4">Introduction to Deep Learning with Keras</h1>
-          
-          <p>This tutorial focuses on a basic introduction to deep learning and how to get started using the python library Keras. 
-              Some experience with python and machine learning is assumed. Experience using the python library 
-              sci-kit-learn will also be very helpful. </p>
-          
-          <p>It is recommended that you follow the tutorial in order. To begin, click on the first menu item on the left 
-              <a href=1introtodeeplearning.html>1. Intro to Deep Learning</a></p> 
-          
-          
-          <p>The content of this tutorial was created by <a href="https://lindseykitchell.weebly.com/">Lindsey Kitchell</a> 
-              in the summer of 2018 as part of her qualifying exams for her Ph.D. in the department of <a href="https://psych.indiana.edu/">Psychological and 
-              Brain Sciences</a> and the <a href="http://www.cogs.indiana.edu/">Program of Cognitive Science</a> at Indiana University. 
-          
-              <h3 id="sources-and-useful-resources">Sources and Useful Resources</h1>
-<p>For learning about machine learning in general, I recommend this <a href="https://www.udacity.com/course/intro-to-machine-learning--ud120">free introductory course from udacity</a>. It will get you up and running with machine learning in python very quickly. </p>
-<p>I also recommend this book by the creator of Keras (the python library used in this tutorial): <a href="https://www.manning.com/books/deep-learning-with-python">Deep Learning with Python</a>. It has a lot of detailed information about deep learning in general and how to implement it with Keras. </p>
-<p>The following links were very helpful in the creation of this tutorial:</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=FrkYu2zVUyM">https://www.youtube.com/watch?v=FrkYu2zVUyM</a></li>
-<li><a href="https://github.com/leriomaggio/deep-learning-keras-tensorflow/tree/pydata-london2017">https://github.com/leriomaggio/deep-learning-keras-tensorflow/tree/pydata-london2017</a></li>
-<li><a href="https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/">https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/</a></li>
-<li><a href="https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-7">https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-7</a></li>
-<li><a href="https://github.com/keras-team/keras/tree/master/examples">https://github.com/keras-team/keras/tree/master/examples</a></li>
-<li><a href="https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/euroscipy2017/1%20Multi-layer%20Fully%20Connected%20Networks.ipynb">https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/euroscipy2017/1%20Multi-layer%20Fully%20Connected%20Networks.ipynb</a></li>
-<li><a href="http://neuralnetworksanddeeplearning.com/chap1.html">http://neuralnetworksanddeeplearning.com/chap1.html</a></li>
-<li><a href="https://www.youtube.com/channel/UC9OeZkIwhzfv-_Cb7fCikLQ">https://www.youtube.com/channel/UC9OeZkIwhzfv-_Cb7fCikLQ</a></li>
-<li><a href="https://machinelearningmastery.com/applied-deep-learning-in-python-mini-course/">https://machinelearningmastery.com/applied-deep-learning-in-python-mini-course/</a></li>
-<li><a href="https://github.com/fchollet/keras-resources">https://github.com/fchollet/keras-resources</a></li>
-</ul>
+  
+<h1 id="data-preprocessing">Data Preprocessing</h1>
+<p>Before feeding your data into a neural network there is some data preparation that must be done. The exact preprocessing that must be done will be different for each domain but we can cover the basics here. </p>
+<h2 id="vectorization">Vectorization</h2>
+<p>All inputs and targets (data and labels) fed into a neural network must be tensors of floating point data. The step of turning the data into a tensor is called <em>vectorization</em>. A tensor is a multidimensional array, a generalization of matrices to an arbitrary number of dimensions. For example, a matrix is a 2D tensor, a vector is a 1D tensor, a scalar is a 0D tensor etc. In python, these are represented using numpy arrays. Your input data should be in a numpy array with the data format &#39;float32&#39;. Data labels can be vectorized using one-hot encoding, as we have seen already. </p>
+<p>Example of data tensors:</p>
+<h3 id="vector-data">Vector data</h3>
+<p>Vector data should be combined into a 2D array with the size (samples, features). One row per sample, one column per feature.</p>
+<h3 id="time-series-or-sequence-data">Time series or Sequence data</h3>
+<p>Time series or sequence data should be in a 3D array. Each sample can be encoded as a 2D matrix (one row per feature, one column per timestep) and the samples are combined into a 3D array of size (samples, features, timesteps). </p>
+<h3 id="image-data">Image data</h3>
+<p>Image data should be in a 4D array of size (samples, image height, image width, number of channels). The number of channels referes to the color channels of the image. If it is a greyscale image, then the number of channels is 1. If it is a color image, then the number of channels is 3 (RGB or HSV). </p>
+<h2 id="normalization">Normalization</h2>
+<p>The input data should be normalized so that each feature has a mean of 0 and a standard deviation of 1. It is not good to feed in large values or heterogeneous data (e.g. data where one feature is in the 0-1 range and another is in the 200-300 range), as it will cause issues with the gradient descent. Instead, the data should have small values (most in the 0-1 range) and be homogeneous (all features have data in roughly the same range). </p>
+<p>The normalization step is done by normalizing each feature independently to have a mean of 0 and noramlizing each feature independently to have a standard deviation of 1. This can be done manually or by using a function in sklearn.</p>
+<h3 id="manually">Manually</h3>
+<pre><code class="lang-python"><span class="hljs-attr">x</span> = data <span class="hljs-comment">#numpy array</span>
 
-          </p>
+<span class="hljs-comment"># subtract the mean across the 0-axis (columns)</span>
+x <span class="hljs-attr">-=</span> x.mean(<span class="hljs-attr">axis=0)</span>
+
+<span class="hljs-comment"># divide by the standard deviation across the 0-axis (columns(</span>
+x /= x.std(<span class="hljs-attr">axis=0)</span>
+</code></pre>
+<h3 id="sklearn">sklearn</h3>
+<p>sklearn has a function called StandardScaler that will do this for you. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">sklearn documentation</a>.</p>
+<pre><code class="lang-python"><span class="hljs-attr">X</span> = data 
+
+<span class="hljs-attr">scaler</span> = StandardScaler()
+<span class="hljs-attr">X_normalized</span> = scaler.fit_transform(X)
+</code></pre>
+<p><strong>Please continue on to <a href="10regularization.html">Regularization</a>.</strong></p>
+
+          
       </div>
     </div>
     <!-- /#page-content-wrapper -->

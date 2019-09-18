@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+  
+<h1 id="evaluating-the-neural-networks">Evaluating Neural Networks</h1>
+<p>A main goal of machine learning is to create models that <em>generalize</em>, meaning that they perform well on data that has not been seen before. To test the generalization power of a model you typically need to split your available data into three separate datasets: <strong>a training set, a validation set, and a testing set</strong>. You then train the model on the training data and evaluate its performance with the validation data. Once the model is sufficiently accurate, you test it a final time on the testing data. It is best to test it on a completely new third (testing) dataset to avoid overfitting to the validation data. When you are training the model, you are making descisions based on how accurately it classifies (or predicts etc.) the validation data. This inadvertently teaches the model what the validation data looks like and it is possible to overfit and overoptimize it for the validation data even if the model never sees the data in training.</p>
+<p>First, some terms:</p>
+<p><img class="center" src="https://cdn-images-1.medium.com/max/1600/1*tBErXYVvTw2jSUYK7thU2A.png" alt=""></p>
+<h3 id="underfitting">Underfitting</h3>
+<p>Underfitting is when the model does not fit the training data very well and therefore cannot generalized to the validation or testing data. The model has poor predictive abilities and its accuracy is low. </p>
+<h3 id="overfitting">Overfitting</h3>
+<p>Overfitting is when the model fits the training or validation data too well. It becomes too specialized for that data and cannot generalize to new data. It has very high accuracy for the training data, but performs poorly when evaluated with new data. </p>
+<h2 id="splitting-the-data-">Splitting the data:</h2>
+<p>There are a couple of ways to split the data to help avoid these problems: </p>
+<p><img class="center" src="https://cdn-images-1.medium.com/max/1600/1*4G__SV580CxFj78o9yUXuQ.png" alt=""></p>
+<h2 id="hold-out-validation">Hold out validation</h2>
+<p>Hold out validation is simply splitting the data into multiple groups and &#39;holding&#39; one or more groups (testing/validation) &#39;out&#39; from training. This works ok, but sometime the split is not as random as we would like. </p>
+<h3 id="manually">Manually</h3>
+<p>This is example, semi-pseudocode. You would also need to do the same with the labels.</p>
+<pre><code class="lang-python"><span class="hljs-comment">#set the number of samples you want to use as validation data</span>
+num_validation_samples = <span class="hljs-number">10000</span>
+
+<span class="hljs-comment">#set the number of samples you want to use as testing data</span>
+num_test_samples = <span class="hljs-number">5000</span>
+
+<span class="hljs-comment">#shuffle the data</span>
+np.random.shuffle(<span class="hljs-title">data</span>)
+
+<span class="hljs-comment">#extract the testing data (select the first 5000 samples)</span>
+test_data = <span class="hljs-title">data</span>[:num_test_samples]
+
+<span class="hljs-comment">#extract the validation data (select the sample entries between 5000 and 15000)</span>
+validation_data = <span class="hljs-title">data</span>[num_test_samples:num_validation_samples+num_test_samples]
+
+<span class="hljs-comment">#extract the training data (select the sample entries from 15000 to the end)</span>
+training_data = <span class="hljs-title">data</span>[num_validation_samples+num_test_samples:]
+
+<span class="hljs-comment"># At this point you can tune your model,</span>
+<span class="hljs-comment"># retrain it, evaluate it, tune it again...</span>
+<span class="hljs-title">model</span> = get_model()
+<span class="hljs-title">model</span>.train(training_data)
+validation_score = <span class="hljs-title">model</span>.evaluate(validation_data)
+
+<span class="hljs-comment"># Once model is sufficiently tuned, evaluate it on the test data</span>
+<span class="hljs-title">model</span> = get_model()
+<span class="hljs-title">model</span>.train(np.concatenate([training_data,
+validation_data]))
+test_score = <span class="hljs-title">model</span>.evaluate(test_data)
+</code></pre>
+<h3 id="using-sklearn">Using sklearn</h3>
+<p>This is probably the easiest option. sklearn has a built in function for splitting up datasets and the labels as well, however it will only split the data into two sets (a training and testing set). You can simply use the function twice. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split">sklearn documentation on the function</a>.</p>
+<pre><code class="lang-python">from sklearn.model_selection <span class="hljs-built_in">import</span> train_test_split
+
+<span class="hljs-comment">#set up the data</span>
+<span class="hljs-attr">X</span> = data
+<span class="hljs-attr">Y</span> = data_labels
+
+<span class="hljs-comment">#choose what proportion of the data you want to be used for training and validation</span>
+<span class="hljs-attr">test_size</span> = .<span class="hljs-number">8</span>
+
+<span class="hljs-comment">#split the data into 80% training (train + val) and 20% testing</span>
+X_train, X_test, y_train, <span class="hljs-attr">y_test</span> = train_test_split(X, Y, <span class="hljs-attr">test_size=test_size)</span>
+
+<span class="hljs-attr">test_size</span> = .<span class="hljs-number">75</span>
+<span class="hljs-comment">#you can use the function again to split up the training/validation data</span>
+X_train, X_val, y_train, <span class="hljs-attr">y_val</span> = train_test_split(X_train, Y_train, <span class="hljs-attr">test_size=test_size)</span>
+
+<span class="hljs-comment">#this splits the data:</span>
+- <span class="hljs-number">20</span>% test
+- <span class="hljs-number">60</span>% train
+- <span class="hljs-number">20</span>% validation
+</code></pre>
+<h2 id="cross-validation">Cross Validation</h2>
+<p>Sometimes there is just not enough data to split into three useful groups. In this case, cross validation can be used. Cross validation is also useful for ensuring the data split is representative and not biased (by training on multiple subsets of data). </p>
+<p>Cross validation consists of splitting the data into subsets of data. You then train on all but one of those subsets and test on the subset that was held out. This is then repeated, but a different subset is held out each time, until each subset has been the &#39;test&#39; subset once. The final accuracy is the average accuracy of each training/testing round. </p>
+<p><img class="center"  style="width:80%" src="https://cdn-images-1.medium.com/max/1600/1*J2B_bcbd1-s1kpWOu_FZrg.png" alt=""></p>
+<p>There are several types of cross validation. We will cover <strong>K-folds cross validation</strong>, <strong>Iterated K-folds cross validation</strong>, and <strong>Leave One Out cross validation</strong>.</p>
+<h3 id="k-folds-cross-validation">K-folds cross validation</h3>
+<p>K-folds cross validation consists of splitting the data into <em>k</em> subsets (folds) of equal size. The model is trained on <em>k-1</em> subsets and tested on the subset left out. This is repeated until all subsets are the testing subset at least once. The final accuracy of the model is the avearge accuracy of each training/testing round. </p>
+<p>sklearn has a function that makes this easy to do. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html#sklearn.model_selection.KFold">sklearn documentation</a>.</p>
+<pre><code class="lang-python">from sklearn.model_selection <span class="hljs-built_in">import</span> KFold 
+
+<span class="hljs-attr">X</span> = data
+<span class="hljs-attr">y</span> = labels
+
+<span class="hljs-comment">#choose how many folds/subsets you want</span>
+<span class="hljs-attr">kf</span> = KFold(<span class="hljs-attr">n_splits=10)</span> 
+
+
+<span class="hljs-comment">#iterate through the splits and save the results</span>
+<span class="hljs-attr">validation_scores</span> = []
+for train_index, test_index <span class="hljs-keyword">in</span> kf.split(X):
+    X_train, <span class="hljs-attr">X_test</span> = X[train_index], X[test_index]
+    y_train, <span class="hljs-attr">y_test</span> = y[train_index], y[test_index]
+
+    <span class="hljs-attr">model</span> = get_model()
+    model.train(X_train, y_train)
+    <span class="hljs-attr">validation_score</span> = model.evaluate(X_test, y_test)
+    validation_scores.append(validation_score)
+
+<span class="hljs-comment">#get average score</span>
+<span class="hljs-attr">validation_score</span> = np.average(validation_scores)
+
+<span class="hljs-comment">#test on final test data if it was held out</span>
+<span class="hljs-attr">model</span> = get_model()
+model.train(data)
+<span class="hljs-attr">test_score</span> = model.evaluate(test_data, test_labels)
+</code></pre>
+<h3 id="iterated-k-folds-cross-validation">Iterated K-folds cross validation</h3>
+<p>Iterated K-folds cross validation is useful when you have relatively little data available and you need to evaluate your model as precisely as possible. It consists of applying K-fold cross validation multiple times and shuffling the data every time before splitting the data into <em>k</em> subsets. The final score is the average of the scores of each k-fold cross validation. This can be computationally expensive as you train and test <em>n</em> x <em>k</em> times, where <em>n</em> is the number of iterations. </p>
+<p>This can be done with an sklearn function. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedKFold.html#sklearn.model_selection.RepeatedKFold">sklearn documentation</a></p>
+<pre><code class="lang-python">from sklearn.model_selection <span class="hljs-built_in">import</span> RepeatedKFold
+
+<span class="hljs-attr">X</span> = data
+<span class="hljs-attr">y</span> = labels
+
+<span class="hljs-comment">#establish the function, choos the number of folds and number of repeats</span>
+<span class="hljs-attr">rkf</span> = RepeatedKFold(<span class="hljs-attr">n_splits=2,</span> <span class="hljs-attr">n_repeats=2)</span>
+
+<span class="hljs-comment">#iterate though the folds and repeats</span>
+<span class="hljs-attr">validation_scores</span> = []
+for train_index, test_index <span class="hljs-keyword">in</span> rkf.split(X):
+    X_train, <span class="hljs-attr">X_test</span> = X[train_index], X[test_index]
+    y_train, <span class="hljs-attr">y_test</span> = y[train_index], y[test_index]
+
+    <span class="hljs-attr">model</span> = get_model()
+    model.train(X_train, y_train)
+    <span class="hljs-attr">validation_score</span> = model.evaluate(X_test, y_test)
+    validation_scores.append(validation_score)
+
+<span class="hljs-comment">#get average score</span>
+<span class="hljs-attr">validation_score</span> = np.average(validation_scores)
+
+<span class="hljs-comment">#test on final test data if it was held out</span>
+<span class="hljs-attr">model</span> = get_model()
+model.train(data)
+<span class="hljs-attr">test_score</span> = model.evaluate(test_data, test_labels)
+</code></pre>
+<h3 id="leave-one-out-loo-cross-validation">Leave One Out (LOO) cross validation</h3>
+<p>Another option when you have relatively little data, is to use LOO cross validation. The is essentially K-fold cross validation when <em>k</em> is equal to the number of samples in the dataset. You train on all but one sample and test just the sample that was left out. This is repeated until every sample has been the test sample. The final accuracy is the average accuracy across all samples. This is computationally expensive, but useful for small datasets. </p>
+<p>sklearn has a function for this as well. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LeaveOneOut.html#sklearn.model_selection.LeaveOneOut">sklearn documentation</a></p>
+<pre><code class="lang-python">from sklearn.model_selection <span class="hljs-built_in">import</span> LeaveOneOut 
+<span class="hljs-attr">X</span> = data
+<span class="hljs-attr">y</span> = labels
+
+<span class="hljs-comment"># establish the function</span>
+<span class="hljs-attr">loo</span> = LeaveOneOut()
+
+<span class="hljs-comment">#iterate through the samples</span>
+<span class="hljs-attr">validation_scores</span> = []
+for train_index, test_index <span class="hljs-keyword">in</span> loo.split(X):
+    X_train, <span class="hljs-attr">X_test</span> = X[train_index], X[test_index]
+    y_train, <span class="hljs-attr">y_test</span> = y[train_index], y[test_index]
+
+    <span class="hljs-attr">model</span> = get_model()
+    model.train(X_train, y_train)
+    <span class="hljs-attr">validation_score</span> = model.evaluate(X_test, y_test)
+    validation_scores.append(validation_score)
+
+<span class="hljs-comment">#get average score</span>
+<span class="hljs-attr">validation_score</span> = np.average(validation_scores)
+
+<span class="hljs-comment">#test on final test data if it was held out</span>
+<span class="hljs-attr">model</span> = get_model()
+model.train(data)
+<span class="hljs-attr">test_score</span> = model.evaluate(test_data, test_labels)
+</code></pre>
+<h3 id="useful-resources-">Useful Resources:</h3>
+<p>source of images: <a href="https://towardsdatascience.com/train-test-split-and-cross-validation-in-python-80b61beca4b6">https://towardsdatascience.com/train-test-split-and-cross-validation-in-python-80b61beca4b6</a></p>
+<p><strong>Please continue on to <a href="9datapreprocessing.html">Data Preprocessing</a>.</strong></p>
+
+          
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

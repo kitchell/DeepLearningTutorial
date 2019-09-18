@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+  
+<h1 id="hyperparameter-tuning">Hyperparameter Tuning</h1>
+<p>A way to improve your model and avoid overfitting is to tune the hyperparameters. Hyperparameters are the parameters that are not learned within the model. These are the choices you have to make when defining the model, like how many hidden nodes to use?, how much dropout to add?, which activation function? etc. There are no set rules for choosing many of these hyperparameters, so it may be beneficial for you to test multiple combinations of each parameter. This can be done in many ways, such as through a grid search or random search. </p>
+<h2 id="grid-search">Grid Search</h2>
+<p>A grid search exhaustively tests all combinations of a grid of parameters selected. This can easily be implemented using the <code>GridSearchCV</code> function from sklearn. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV">sklearn documentation</a>.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> keras.wrappers.scikit_learn import KerasClassifier
+<span class="hljs-keyword">from</span> sklearn.model_selection import GridSearchCV
+
+<span class="hljs-meta">#create a function for defining the network</span>
+<span class="hljs-function">def <span class="hljs-title">make_model</span>(<span class="hljs-params">dense_layer_sizes, filters, kernel_size, pool_size</span>):
+
+    model </span>= Sequential()
+
+    model.<span class="hljs-keyword">add</span>(Conv2D(filters, (kernel_size, kernel_size),
+                     padding=<span class="hljs-string">'valid'</span>, input_shape=input_shape))
+    model.<span class="hljs-keyword">add</span>(Activation(<span class="hljs-string">'relu'</span>))
+    model.<span class="hljs-keyword">add</span>(Conv2D(filters, (kernel_size, kernel_size)))
+    model.<span class="hljs-keyword">add</span>(Activation(<span class="hljs-string">'relu'</span>))
+    model.<span class="hljs-keyword">add</span>(MaxPooling2D(pool_size=(pool_size, pool_size)))
+    model.<span class="hljs-keyword">add</span>(Dropout(<span class="hljs-number">0.25</span>))
+
+    model.<span class="hljs-keyword">add</span>(Flatten())
+    <span class="hljs-keyword">for</span> layer_size <span class="hljs-keyword">in</span> dense_layer_sizes:
+        model.<span class="hljs-keyword">add</span>(Dense(layer_size))
+        model.<span class="hljs-keyword">add</span>(Activation(<span class="hljs-string">'relu'</span>))
+    model.<span class="hljs-keyword">add</span>(Dropout(<span class="hljs-number">0.5</span>))
+    model.<span class="hljs-keyword">add</span>(Dense(nb_classes))
+    model.<span class="hljs-keyword">add</span>(Activation(<span class="hljs-string">'softmax'</span>))
+
+    model.compile(loss=<span class="hljs-string">'categorical_crossentropy'</span>,
+                  optimizer=<span class="hljs-string">'adadelta'</span>,
+                  metrics=[<span class="hljs-string">'accuracy'</span>])
+
+    <span class="hljs-keyword">return</span> model 
+
+dense_size_candidates = [[<span class="hljs-number">32</span>], [<span class="hljs-number">64</span>], [<span class="hljs-number">32</span>, <span class="hljs-number">32</span>], [<span class="hljs-number">64</span>, <span class="hljs-number">64</span>]]
+
+<span class="hljs-meta">#create a classifier using the model function</span>
+my_classifier = KerasClassifier(make_model, batch_size=<span class="hljs-number">32</span>)
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> the grid search </span>
+validator = GridSearchCV(my_classifier,
+                         param_grid={<span class="hljs-string">'dense_layer_sizes'</span>: dense_size_candidates,
+                                     <span class="hljs-meta"># nb_epoch is avail for tuning even when not</span>
+                                     <span class="hljs-meta"># an argument to model building function</span>
+                                     <span class="hljs-string">'epochs'</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">6</span>],
+                                     <span class="hljs-string">'filters'</span>: [<span class="hljs-number">8</span>],
+                                     <span class="hljs-string">'kernel_size'</span>: [<span class="hljs-number">3</span>],
+                                     <span class="hljs-string">'pool_size'</span>: [<span class="hljs-number">2</span>]},
+                         scoring=<span class="hljs-string">'neg_log_loss'</span>,
+                         n_jobs=<span class="hljs-number">1</span>)
+validator.fit(X_train, y_train)
+
+print(<span class="hljs-string">'The parameters of the best model are: '</span>)
+print(validator.best_params_)
+
+<span class="hljs-meta"># validator.best_estimator_ returns sklearn-wrapped version of best model.</span>
+<span class="hljs-meta"># validator.best_estimator_.model returns the (unwrapped) keras model</span>
+best_model = validator.best_estimator_.model
+metric_names = best_model.metrics_names
+metric_values = best_model.evaluate(X_test, y_test)
+<span class="hljs-keyword">for</span> metric, <span class="hljs-function"><span class="hljs-keyword">value</span> <span class="hljs-keyword">in</span> <span class="hljs-title">zip</span>(<span class="hljs-params">metric_names, metric_values</span>):
+    <span class="hljs-title">print</span>(<span class="hljs-params">metric, <span class="hljs-string">': '</span>, <span class="hljs-keyword">value</span></span>)</span>
+</code></pre>
+<h2 id="random-search">Random Search</h2>
+<p>Sklearn also has a function for performing a random search of hyperparameter values, <code>RandomizedSearchCV</code>. Instead of trying all parameters it randomly selects the paramters a set number of times.  <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV">sklearn documentation</a>. </p>
+<p>The set up is essentially the same as the grid search, except you also have to set a number of iterations. </p>
+<pre><code class="lang-python">validator = RandomSearchCV(my_classifier,
+                         param_grid={<span class="hljs-string">'dense_layer_sizes'</span>: dense_size_candidates,
+                                     # nb_epoch <span class="hljs-keyword">is</span> avail <span class="hljs-keyword">for</span> tuning even when not
+                                     # <span class="hljs-keyword">an</span> <span class="hljs-keyword">argument</span> <span class="hljs-keyword">to</span> model building <span class="hljs-function"><span class="hljs-keyword">function</span></span>
+                                     <span class="hljs-string">'epochs'</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">6</span>],
+                                     <span class="hljs-string">'filters'</span>: [<span class="hljs-number">8</span>],
+                                     <span class="hljs-string">'kernel_size'</span>: [<span class="hljs-number">3</span>],
+                                     <span class="hljs-string">'pool_size'</span>: [<span class="hljs-number">2</span>]},
+                         n_iter=<span class="hljs-number">20</span>,
+                         scoring=<span class="hljs-string">'neg_log_loss'</span>,
+                         n_jobs=<span class="hljs-number">1</span>)
+</code></pre>
+<p><a href="http://scikit-learn.org/stable/auto_examples/model_selection/plot_randomized_search.html#sphx-glr-auto-examples-model-selection-plot-randomized-search-py">Here&#39;s an example comparing the two types of search in sklearn</a>.</p>
+<h2 id="hyperas">Hyperas</h2>
+<p>There is a package called <a href="http://maxpumperla.com/hyperas/">Hyperas</a> that combines another package called <a href="http://hyperopt.github.io/hyperopt/">Hyperopt</a> and Keras for fast hyperparameter optimization.</p>
+<h3 id="useful-resources">Useful resources</h3>
+<p><a href="http://neupy.com/2016/12/17/hyperparameter_optimization_for_neural_networks.html">http://neupy.com/2016/12/17/hyperparameter_optimization_for_neural_networks.html</a></p>
+<p><a href="https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/pydata-london2017/4.%20HyperParameter%20Tuning.ipynb">https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/pydata-london2017/4.%20HyperParameter%20Tuning.ipynb</a></p>
+<p><a href="http://scikit-learn.org/stable/modules/grid_search.html">http://scikit-learn.org/stable/modules/grid_search.html</a></p>
+<!--<p><strong>Please move on to the <em>Working with Data</em> portion: <a href="https://github.com/kitchell/DeepLearningTutorial_LBspectrum/blob/master/MLP%20with%20LB%20spectrum.ipynb">MLP with LB Spectrum</a></strong></p>-->
+
+          
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

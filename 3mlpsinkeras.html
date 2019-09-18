@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+  
+          <h1>Multi-Layer Perceptrons: Fully Connected Neural Networks</h1>
+
+          <p>A multi-layer perceptron (MLP) is a fully connected neural network, 
+              meaning that each node connects to all possible nodes in the surrounding layers. 
+              The general format of the MLP has already been described in the last two pages. 
+              Here we will focus on how to create them using Keras. We will go through two examples 
+              given in the Keras documentation. These examples can be found 
+              <a href="https://keras.io/getting-started/sequential-model-guide/">here</a>.</p>
+          
+          <h3>Dense Layer</h3>
+
+          <p>To create a MLP or fully connected neural network in Keras, you will need to use the 
+              <strong>Dense</strong> layer. The Keras documentation on the Dense layer can be found 
+              <a href="https://keras.io/layers/core/">here</a>. A <strong>Dense</strong> layer is a fully
+              connected layer. </p>
+ 
+          <div class="code">
+          <pre><code class="lang-python">keras.layers.Dense(units, activation=None, use_bias=True, kernel_initializer='glorot_uniform', bias_initializer='zeros', kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+</code></pre></div>
+          <p>The arguments we care about for the dense layer:</p>
+        <ul>
+        <li>Units - Number of nodes in the hidden layer</li>
+        <li>Activation - activation function to use</li>
+        </ul>
+          
+          <p>Please see the Keras documentation for information on the others. </p>
+          <p>The more hidden units (nodes) you have, the more complex representations that can be learned, 
+              however this can lead to over fitting on the training data. The network may learn patterns 
+              you don't want it to learn, patterns only specific to the training data. </p>
+
+          <h3>Dropout Layer</h3>
+
+          <p>You may also need a <strong>Dropout</strong> layer. A <strong>Dropout</strong> layer helps prevent 
+              overfitting of the data. It randomly sets a fraction (defined by the user) of the input to 0 at each 
+              update during training. <a href="https://keras.io/layers/core/#dropout">Keras documentation on Dropout
+              </a> and <a href="http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf">detailed information 
+              on Dropout</a>. Dropout layers are not required, however they are helpful. </p>
+          
+          <pre><code class="lang-python">keras.layers.Dropout(rate, noise_shape=None, seed=None)
+</code></pre>
+          
+          <p>The argument we care about for the dropout layer:</p>
+            <ul>
+            <li>Rate - the fraction of the input units to drop</li>
+            </ul>
+
+          <p>Please see the Keras documentation for information on the others.</p>
+
+          <h2>MLP for binary classification</h2>
+
+          <p>Here is all of the code for a simple binary classification MLP example. We will go through it below.</p>
+
+          <pre><code class="lang-python">import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+
+# Generate dummy data
+x_train = np.random.random((1000, 20))
+y_train = np.random.randint(2, size=(1000, 1))
+x_test = np.random.random((100, 20))
+y_test = np.random.randint(2, size=(100, 1))
+
+model = Sequential()
+model.add(Dense(64, input_dim=20, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train,
+          epochs=20,
+          batch_size=128)
+score = model.evaluate(x_test, y_test, batch_size=128)
+</code></pre>
+
+<ol>
+<li>Import the libraries needed for the script
+    <pre><code class="lang-python">import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+</code></pre>
+</li>
+<li>Create some data to use for the example
+<pre><code class="lang-python">x_train = np.random.random((1000, 20))
+y_train = np.random.randint(2, size=(1000, 1))
+x_test = np.random.random((100, 20))
+y_test = np.random.randint(2, size=(100, 1))
+</code></pre>
+</li>
+<li>Define the type of model (Sequential)
+    <pre><code class="lang-python">model = Sequential()
+</code></pre>
+</li>
+<li>Add the first layer. Since this is an input layer we need to add an additional argument (input_dim). 
+    This is a dense layer with 64 nodes. The data we are inputting has 20 values per sample, so we tell 
+    it that the input dimension is 20. We also set the activation function to be 'relu'. 
+    <pre><code class="lang-python">model.add(Dense(64, input_dim=20, activation='relu'))
+</code></pre>
+</li>
+<li>Add a dropout layer to prevent overfitting. We have set the layer to randomly drop 50% of the input.
+    <pre><code class="lang-python">model.add(Dropout(0.5))
+</code></pre>
+</li>
+<li>Add another hidden dense layer. This layer also has 64 nodes and uses the relu activation function. 
+<pre><code class="lang-python">model.add(Dense(64, activation='relu'))
+</code></pre>
+</li>
+<li>Add another dropout layer, 50% rate again.
+<pre><code class="lang-python"><span class="hljs-selector-tag">model</span><span class="hljs-selector-class">.add</span>(<span class="hljs-selector-tag">Dropout</span>(0<span class="hljs-selector-class">.5</span>))
+</code></pre>
+</li>
+<li>Add the output layer. This is a dense layer with 1 node. It is one node because this is a binary classification problem,
+    the output is either 1 or 0. The activation function used is sigmoid. Sigmoid is the most appropriate function to use 
+    for a binary classification problem because it forces the output to be between 0 and 1, making it easy to set a 
+    threshold (i.e. .5) for classification. 
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(Dense(<span class="hljs-number">1</span>, activation=<span class="hljs-string">'sigmoid'</span>)) 
+</code></pre>
+</li>
+<li>Compile the model. Because this is a binary classification problem, we use the loss function 'binary_crossentropy'&#39;'. 
+    The optimizer chosen is &#39;rmsprop&#39; and we want it to output the accuracy metric. 
+    <pre><code class="lang-python"><span class="hljs-keyword">model</span>.compile(loss=<span class="hljs-string">'binary_crossentropy'</span>,
+       optimizer=<span class="hljs-string">'rmsprop'</span>,
+       metrics=[<span class="hljs-string">'accuracy'</span>])
+       </code></pre>
+</li>
+<li>Fit the model. This is what actually trains the model. We give it the input (training data) x_train and y_train. 
+    We ask it to run the training 20 times and use a batch size of 128. This means it will see 128 inputs before 
+    updating the weights. 
+    <pre><code class="lang-python">model.fit(x_train, y_train,
+    epochs=<span class="hljs-number">20</span>,
+    batch_size=<span class="hljs-number">128</span>)
+  </code></pre>
+</li>
+<li>Last step is to check the accuracy of the model on some testing data that was kept out of training. 
+<pre><code class="lang-python"><span class="hljs-attr">score</span> = model.evaluate(x_test, y_test, batch_size=<span class="hljs-number">128</span>)
+</code></pre>
+</li>
+</ol>
+          
+          
+<h2 >MLP for multi-class classification</h2>
+<p>Here is all of the code for a multi-class classification example. We will go through it below.</p>
+<pre><code class="lang-python"><span class="hljs-built_in">import</span> keras
+from keras.models <span class="hljs-built_in">import</span> Sequential
+from keras.layers <span class="hljs-built_in">import</span> Dense, Dropout, Activation
+from keras.optimizers <span class="hljs-built_in">import</span> SGD
+<span class="hljs-built_in">import</span> numpy as np
+
+<span class="hljs-comment"># Generate dummy data</span>
+<span class="hljs-attr">x_train</span> = np.random.random((<span class="hljs-number">1000</span>, <span class="hljs-number">20</span>))
+<span class="hljs-attr">y_train</span> = keras.utils.to_categorical(np.random.randint(<span class="hljs-number">10</span>, <span class="hljs-attr">size=(1000,</span> <span class="hljs-number">1</span>)), <span class="hljs-attr">num_classes=10)</span>
+<span class="hljs-attr">x_test</span> = np.random.random((<span class="hljs-number">100</span>, <span class="hljs-number">20</span>))
+<span class="hljs-attr">y_test</span> = keras.utils.to_categorical(np.random.randint(<span class="hljs-number">10</span>, <span class="hljs-attr">size=(100,</span> <span class="hljs-number">1</span>)), <span class="hljs-attr">num_classes=10)</span>
+
+<span class="hljs-attr">model</span> = Sequential()
+<span class="hljs-comment"># Dense(64) is a fully-connected layer with 64 hidden units.</span>
+<span class="hljs-comment"># in the first layer, you must specify the expected input data shape:</span>
+<span class="hljs-comment"># here, 20-dimensional vectors.</span>
+model.add(Dense(<span class="hljs-number">64</span>, <span class="hljs-attr">activation='relu',</span> <span class="hljs-attr">input_dim=20))</span>
+model.add(Dropout(<span class="hljs-number">0.5</span>))
+model.add(Dense(<span class="hljs-number">64</span>, <span class="hljs-attr">activation='relu'))</span>
+model.add(Dropout(<span class="hljs-number">0.5</span>))
+model.add(Dense(<span class="hljs-number">10</span>, <span class="hljs-attr">activation='softmax'))</span>
+
+<span class="hljs-attr">sgd</span> = SGD(<span class="hljs-attr">lr=0.01,</span> <span class="hljs-attr">decay=1e-6,</span> <span class="hljs-attr">momentum=0.9,</span> <span class="hljs-attr">nesterov=True)</span>
+model.compile(<span class="hljs-attr">loss='categorical_crossentropy',</span>
+              <span class="hljs-attr">optimizer=sgd,</span>
+              <span class="hljs-attr">metrics=['accuracy'])</span>
+
+model.fit(x_train, y_train,
+          <span class="hljs-attr">epochs=20,</span>
+          <span class="hljs-attr">batch_size=128)</span>
+<span class="hljs-attr">score</span> = model.evaluate(x_test, y_test, <span class="hljs-attr">batch_size=128)</span>
+</code></pre>
+<ol>
+<li>Import the necessary libraries
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> keras
+<span class="hljs-title">from</span> keras.models <span class="hljs-keyword">import</span> Sequential
+<span class="hljs-title">from</span> keras.layers <span class="hljs-keyword">import</span> Dense, Dropout, Activation
+<span class="hljs-title">from</span> keras.optimizers <span class="hljs-keyword">import</span> SGD
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+</code></pre>
+</li>
+<li>Create some data to use for the example.
+<pre><code class="lang-python">x_train = np<span class="hljs-selector-class">.random</span><span class="hljs-selector-class">.random</span>((<span class="hljs-number">1000</span>, <span class="hljs-number">20</span>))
+y_train = keras<span class="hljs-selector-class">.utils</span><span class="hljs-selector-class">.to_categorical</span>(np<span class="hljs-selector-class">.random</span><span class="hljs-selector-class">.randint</span>(<span class="hljs-number">10</span>, size=(<span class="hljs-number">1000</span>, <span class="hljs-number">1</span>)), num_classes=<span class="hljs-number">10</span>)
+x_test = np<span class="hljs-selector-class">.random</span><span class="hljs-selector-class">.random</span>((<span class="hljs-number">100</span>, <span class="hljs-number">20</span>))
+y_test = keras<span class="hljs-selector-class">.utils</span><span class="hljs-selector-class">.to_categorical</span>(np<span class="hljs-selector-class">.random</span><span class="hljs-selector-class">.randint</span>(<span class="hljs-number">10</span>, size=(<span class="hljs-number">100</span>, <span class="hljs-number">1</span>)), num_classes=<span class="hljs-number">10</span>)
+</code></pre>
+</li>
+<li>Define the type of model (Sequential) and add the hidden layers. These hidden layers are the exact same as above so 
+    I will not go through them one by one again.
+<pre><code class="lang-python"><span class="hljs-keyword">model</span> = Sequential()
+<span class="hljs-keyword">model</span>.add(Dense(<span class="hljs-number">64</span>, activation=<span class="hljs-string">'relu'</span>, input_dim=<span class="hljs-number">20</span>))
+<span class="hljs-keyword">model</span>.add(Dropout(<span class="hljs-number">0.5</span>))
+<span class="hljs-keyword">model</span>.add(Dense(<span class="hljs-number">64</span>, activation=<span class="hljs-string">'relu'</span>))
+<span class="hljs-keyword">model</span>.add(Dropout(<span class="hljs-number">0.5</span>))
+</code></pre>
+</li>
+<li>Add the output layer. Here is where it is different from the binary classification MLP. We have 10 possible 
+    classification categories, so we need 10 nodes for the output layer. We also use the softmax activation function. 
+    This is the best one to use for multi-class classification as softmax assigns decimal probabilities to each class 
+    in a multi-class problem. Those decimal probabilities must add up to 1.0 and this additional constraint helps 
+    training converge more quickly than it otherwise would.
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(Dense(<span class="hljs-number">10</span>, activation=<span class="hljs-string">'softmax'</span>))
+</code></pre>
+</li>
+<li>Compile the model. In this example, we are using stochastic gradient descent (SGD,sgd) for the optimizer. 
+    The first line below allows us to cutomize arguments for the optimizer. We use the categorical_crossentropy 
+    loss function because it is a multi-class classification network. 
+<pre><code class="lang-python"><span class="hljs-attr">sgd</span> = SGD(<span class="hljs-attr">lr=0.01,</span> <span class="hljs-attr">decay=1e-6,</span> <span class="hljs-attr">momentum=0.9,</span> <span class="hljs-attr">nesterov=True)</span>
+model.compile(<span class="hljs-attr">loss='categorical_crossentropy',</span>
+           <span class="hljs-attr">optimizer=sgd,</span>
+           <span class="hljs-attr">metrics=['accuracy'])</span>
+           </code></pre>
+</li>
+<li>Fit the model. We fit the model using the training data and 20 rounds of training and a batch size of 128.
+<pre><code class="lang-python">model.fit(x_train, y_train,
+    epochs=<span class="hljs-number">20</span>,
+    batch_size=<span class="hljs-number">128</span>)
+    </code></pre>
+</li>
+<li>Evaluate the model. Finally, we test the accuracy of the model using testing data we kept out of the training.
+    <pre><code class="lang-python"><span class="hljs-attr">score</span> = model.evaluate(x_test, y_test, batch_size=<span class="hljs-number">128</span>)
+</code></pre>
+</li>
+</ol>
+<p>That's it! You now know the basic requirements of an MLP in Keras. Essentially, you need a dense input layer, some dense hidden layers (with or without dropout), and a dense output layer. </p>
+<p><strong>Please continue on to <a href="4cnnsinkeras.html">Convolutional Neural Networks</a>.</strong></p>
+
+          
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

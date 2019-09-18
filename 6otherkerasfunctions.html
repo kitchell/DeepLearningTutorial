@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+  
+<h1 id="additional-useful-functions-in-keras">Additional Useful Functions in Keras</h1>
+<h2 id="information-about-the-model">Information about the model</h2>
+<pre><code class="lang-python"><span class="hljs-selector-tag">model</span><span class="hljs-selector-class">.summary</span>()
+</code></pre>
+<p>This provides a print out summarizing the network like this:</p>
+<pre><code><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span>
+<span class="hljs-section">Layer (type)                 Output Shape              Param #   
+=================================================================</span>
+dense_2 (Dense)              (None, 100)               9400      
+<span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span>
+dense_3 (Dense)              (None, 9)                 909       
+<span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span>
+<span class="hljs-section">activation_2 (Activation)    (None, 9)                 0         
+=================================================================</span>
+Total params: 10,309
+Trainable params: 10,309
+Non-trainable params: 0
+<span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span><span class="hljs-strong">_____</span>
+</code></pre>
+
+<pre><code class="lang-python">from keras<span class="hljs-selector-class">.utils</span> import plot_model
+<span class="hljs-function"><span class="hljs-title">plot_model</span><span class="hljs-params">(model, to_file=<span class="hljs-string">'model.png'</span>)</span></span>
+<span class="hljs-function"><span class="hljs-title">plot_model</span><span class="hljs-params">(model, to_file=<span class="hljs-string">'model_plot.png'</span>, show_shapes=True, show_layer_names=True)</span></span>
+</code></pre>
+<p>This prints out a visual description of the model.</p>
+<p><img class='center' src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/09/Plot-of-Neural-Network-Model-Graph.png" alt=""></p>
+<p>You can also iterate through the layers and print information:</p>
+<pre><code class="lang-python"><span class="hljs-built_in">print</span>(<span class="hljs-string">'Model Input Tensors: '</span>, model.input, <span class="hljs-keyword">end</span>=<span class="hljs-string">'\n\n'</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">'Layers - Network Configuration:'</span>, <span class="hljs-keyword">end</span>=<span class="hljs-string">'\n\n'</span>)
+<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> model.layers:
+    <span class="hljs-built_in">print</span>(layer.name, layer.trainable)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">'Layer Configuration:'</span>)
+    <span class="hljs-built_in">print</span>(layer.get_config(), <span class="hljs-keyword">end</span>=<span class="hljs-string">'\n{}\n'</span>.format(<span class="hljs-string">'----'</span>*<span class="hljs-number">10</span>))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">'Model Output Tensors: '</span>, model.output)
+</code></pre>
+<h2 id="callback-functions">Callback functions</h2>
+<p>Callback functions are included in the fitting step of model creation:</p>
+<pre><code class="lang-python">model.fit(X_train, Y_train, <span class="hljs-attr">validation_data</span> = (X_val, Y_val), <span class="hljs-attr">epochs=50,</span> 
+          <span class="hljs-attr">batch_size=128,</span> <span class="hljs-attr">verbose=True,</span> <span class="hljs-attr">callbacks=[best_model,</span> early_stop])
+</code></pre>
+<p><a href="https://keras.io/callbacks/">Keras Documentation on Callback functions</a></p>
+<h3 id="model-history">Model History</h3>
+
+        <pre><code class="lang-python">keras.callbacks.History()
+
+# <span class="hljs-keyword">list</span> <span class="hljs-keyword">all</span> data in <span class="hljs-keyword">history</span>
+<span class="hljs-keyword">history</span> = model.fit(...)
+<span class="hljs-keyword">print</span>(<span class="hljs-keyword">history</span>.<span class="hljs-keyword">history</span>.<span class="hljs-built_in">keys</span>())
+</code></pre>
+<p>By default, the fit function returns the entire history of training/validation loss and accuracy, for each epoch. We can therefore plot the behaviour of loss and accuracy during the training phase:</p>
+<pre><code class="lang-python"><span class="hljs-selector-tag">import</span> <span class="hljs-selector-tag">matplotlib</span><span class="hljs-selector-class">.pyplot</span> <span class="hljs-selector-tag">as</span> <span class="hljs-selector-tag">plt</span>
+%<span class="hljs-selector-tag">matplotlib</span> <span class="hljs-selector-tag">inline</span>
+
+<span class="hljs-selector-tag">def</span> <span class="hljs-selector-tag">plot_history</span>(network_history):
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.figure</span>()
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.xlabel</span>(<span class="hljs-string">'Epochs'</span>)
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.ylabel</span>(<span class="hljs-string">'Loss'</span>)
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.plot</span>(network_history.history[<span class="hljs-string">'loss'</span>])
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.plot</span>(network_history.history[<span class="hljs-string">'val_loss'</span>])
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.legend</span>([<span class="hljs-string">'Training'</span>, <span class="hljs-string">'Validation'</span>])
+
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.figure</span>()
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.xlabel</span>(<span class="hljs-string">'Epochs'</span>)
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.ylabel</span>(<span class="hljs-string">'Accuracy'</span>)
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.plot</span>(network_history.history[<span class="hljs-string">'acc'</span>])
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.plot</span>(network_history.history[<span class="hljs-string">'val_acc'</span>])
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.legend</span>([<span class="hljs-string">'Training'</span>, <span class="hljs-string">'Validation'</span>], loc=<span class="hljs-string">'lower right'</span>)
+    <span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.show</span>()
+
+<span class="hljs-selector-tag">plot_history</span>(network_history)
+</code></pre>
+<h3 id="early-stopping">Early Stopping</h3>
+<div class="code">
+          <pre><code class="lang-python">keras.callbacks.EarlyStopping(<span class="hljs-attr">monitor='val_loss',</span> <span class="hljs-attr">min_delta=0,</span> <span class="hljs-attr">patience=0,</span> <span class="hljs-attr">verbose=0,</span> <span class="hljs-attr">mode='auto',</span> <span class="hljs-attr">baseline=None)</span>
+
+<span class="hljs-attr">early_stop</span> = EarlyStopping(<span class="hljs-attr">monitor='val_loss',</span> <span class="hljs-attr">patience=2,</span> <span class="hljs-attr">verbose=1)</span>
+</code></pre></div>
+<p>The early stopping callback stops training once a monitored metric stops improving. Monitor is set to the quanity to monitor (e.g. val_loss) and patience is set to the number of epochs with no change (e.g. 2).</p>
+<h3 id="model-checkpoint">Model Checkpoint</h3>
+<pre><code class="lang-python">keras.callbacks.ModelCheckpoint(filepath, <span class="hljs-attr">monitor='val_loss',</span> <span class="hljs-attr">verbose=0,</span> <span class="hljs-attr">save_best_only=False,</span> <span class="hljs-attr">save_weights_only=False,</span> <span class="hljs-attr">mode='auto',</span> <span class="hljs-attr">period=1)</span>
+
+<span class="hljs-comment">#save the best model</span>
+<span class="hljs-attr">best_model</span> = ModelCheckpoint(fBestModel, <span class="hljs-attr">verbose=0,</span> <span class="hljs-attr">save_best_only=True)</span>
+<span class="hljs-attr">best_model</span> = ModelCheckpoint(fBestModel, <span class="hljs-attr">monitor='val_acc',</span> <span class="hljs-attr">save_best_only=True,</span> <span class="hljs-attr">mode='max')</span>
+</code></pre>
+<p>The model checkpoint callback stores the model after every epoch. It can also be set to save only the best model found during the epochs. </p>
+<h3 id="tensorboard">TensorBoard</h3>
+<pre><code class="lang-python">keras.callbacks.TensorBoard(<span class="hljs-attr">log_dir='./logs',</span> <span class="hljs-attr">histogram_freq=0,</span> <span class="hljs-attr">batch_size=32,</span> <span class="hljs-attr">write_graph=True,</span> <span class="hljs-attr">write_grads=False,</span> <span class="hljs-attr">write_images=False,</span> <span class="hljs-attr">embeddings_freq=0,</span> <span class="hljs-attr">embeddings_layer_names=None,</span> <span class="hljs-attr">embeddings_metadata=None,</span> <span class="hljs-attr">embeddings_data=None)</span>
+</code></pre>
+<p>The tensorboard callback writes a log for use with the <a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">TensorBoard visualization</a>.</p>
+<p>Arguments:</p>
+<ul>
+<li>log_dir - directory to save the log files</li>
+<li>histogram_freq - how often to save activation histograms</li>
+<li>embeddings_freq - how often to save embedding data</li>
+</ul>
+<p>launch via command line</p>
+<pre><code>tensorboard <span class="hljs-comment">--logdir=my_log_dir</span>
+</code></pre>
+<p>and browse to <a href="http://localhost:6006">http://localhost:6006</a></p>
+<h3 id="csv-logger">CSV logger</h3>
+<pre><code class="lang-python">keras<span class="hljs-selector-class">.callbacks</span><span class="hljs-selector-class">.CSVLogger</span>(filename, separator=<span class="hljs-string">','</span>, append=False)
+</code></pre>
+<p>The CSV logger streams the epoch results to a csv file. </p>
+<h2 id="other-functions">Other functions</h2>
+<h3 id="batch-normalization">Batch normalization</h3>
+<p>When we initialize a model, we typically normalize the inital values of our input to have 0 mean and unit variance. As training progresses we may loose this normalization, slowing training and causing issues. A batch normalization layer reestablishes these normalizations. It is typically used after a dense or convolutional layer. <a href="https://keras.io/layers/normalization/">Keras documentation</a>. </p>
+<pre><code class="lang-python">from keras.layers.normalization <span class="hljs-built_in">import</span> BatchNormalization
+
+BatchNormalization(<span class="hljs-attr">axis=-1,</span> <span class="hljs-attr">momentum=0.99,</span> <span class="hljs-attr">epsilon=0.001,</span> <span class="hljs-attr">center=True,</span> <span class="hljs-attr">scale=True,</span> 
+                   <span class="hljs-attr">beta_initializer='zeros',</span> <span class="hljs-attr">gamma_initializer='ones',</span> <span class="hljs-attr">moving_mean_initializer='zeros',</span>
+                   <span class="hljs-attr">moving_variance_initializer='ones',</span> <span class="hljs-attr">beta_regularizer=None,</span> <span class="hljs-attr">gamma_regularizer=None,</span>
+                   <span class="hljs-attr">beta_constraint=None,</span> <span class="hljs-attr">gamma_constraint=None)</span>
+</code></pre>
+<h2 id="tips">Tips</h2>
+<p>You can use a validation set of data during training to see how well the model is generalizing. <a href="https://stackoverflow.com/questions/46308374/what-is-validation-data-used-for-in-a-keras-sequential-model">Better explanation here</a>. This data will not be used to train the model, but it gives you an idea of how well it does without having to fully evaluate the model with the test data. </p>
+<pre><code class="lang-python"># Train model (<span class="hljs-keyword">use</span> 10% of training <span class="hljs-keyword">set</span> <span class="hljs-keyword">as</span> validation <span class="hljs-keyword">set</span>)
+history = model.<span class="hljs-keyword">fit</span>(X_train, Y_train, validation_split=0.1)
+
+# Train model (<span class="hljs-keyword">use</span> validation data <span class="hljs-keyword">as</span> validation <span class="hljs-keyword">set</span>)
+history = model.<span class="hljs-keyword">fit</span>(X_train, Y_train, validation_data=(X_val, Y_val))
+</code></pre>
+<p>You can save a trained model:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">model</span>.save(<span class="hljs-string">'filepath/mymodel.h5'</span>)
+</code></pre>
+<p>and load a saved model:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> keras.models <span class="hljs-keyword">import</span> load_model
+model = load_model(<span class="hljs-string">'my_model.h5'</span>)
+</code></pre>
+<p><a href="https://keras.io/getting-started/faq/#how-can-i-save-a-keras-model">More info</a>.</p>
+<p><a href="https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/pydata-london2017/2.1%20Hidden%20Layer%20Representation%20and%20Embeddings.ipynb">View the hidden representations</a> (scroll down to end)</p>
+<p><strong>Please continue on to <a href="7lossfunctionsoptimizers.html">Loss functions and optimizers</a>.</strong></p>
+
+          
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

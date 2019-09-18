@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Deep Learning Tutorial using Keras">
+  <meta name="author" content="Lindsey M Kitchell">
+
+  <title>Intro to Deep Learning</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Deep Learning With Keras</div>
+      <div class="list-group list-group-flush">
+        <a href="1introtodeeplearning.html" class="list-group-item list-group-item-action bg-light">1. Intro to Deep Learning</a>
+        <a href="2introtokeras.html" class="list-group-item list-group-item-action bg-light">2. Intro to Keras</a>
+        <a href="3mlpsinkeras.html" class="list-group-item list-group-item-action bg-light">3. MLPs in Keras</a>
+        <a href="4cnnsinkeras.html" class="list-group-item list-group-item-action bg-light">4. CNNs in Keras</a>
+        <a href="5activationfunctions.html" class="list-group-item list-group-item-action bg-light">5. Activation Functions</a>
+        <a href="6otherkerasfunctions.html" class="list-group-item list-group-item-action bg-light">6. Other Useful Keras Functions</a>
+        <a href="7lossfunctionsoptimizers.html" class="list-group-item list-group-item-action bg-light">7. Loss Functions and Optimizers</a>
+        <a href="8evaluatingnns.html" class="list-group-item list-group-item-action bg-light">8. Evaluating Neural Networks</a>
+        <a href="9datapreprocessing.html" class="list-group-item list-group-item-action bg-light">9. Data Preprocessing</a>
+        <a href="10regularization.html" class="list-group-item list-group-item-action bg-light">10. Regularization</a>
+        <a href="11hyperparametertuning.html" class="list-group-item list-group-item-action bg-light">11. Hyperparameter Tuning</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://lindseykitchell.weebly.com/">About the Author</a>
+            </li>
+<!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+-->
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+  
+          <h1 id="convolutional-neural-networks">Convolutional Neural Networks</h1>
+
+          <p>A Convolutional Neural Network (CNN) is a specific type of feed-forward deep network. 
+              CNNs are inspired by the visual cortex of the brain. Some of the individual neurons of 
+              the visual cortex are activated only when edges of a particular orientation (e.g. vertical,
+              horizontal) are viewed. These neurons are ordered together in a column and combine together 
+              to produce visual perception. Essentially, it is the idea that individual components of a 
+              system are specialized for specific tasks. </p>
+
+        <p><a href="https://www.youtube.com/watch?v=JiN9p5vWHDY&amp;list=PLjJh1vlSEYgvGod9wWiydumYl8hOXixNu&amp;index=8">This video gives a great, easy to understand, explanation of CNNs</a>. </p>
+        <p><a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/">Very useful resource and source of the images used below</a></p>
+        <p><a href="http://cs231n.github.io/convolutional-networks/">This is also a very helpful resource</a></p>
+        <p><a href="https://www.kaggle.com/dansbecker/intro-to-deep-learning-and-computer-vision">As is this course on Kaggle</a></p>
+        <p><a href="https://github.com/leriomaggio/deep-learning-keras-tensorflow/blob/pydata-london2017/3.%20Convolutional%20Neural%20Networks.ipynb">Useful python notebook</a></p>
+
+          
+          <p>A CNN has three types of layers: convolutional layers, activation (relu) layers, and pooling layers. 
+              In Keras, the convolution and activation layers can be added at the same time. CNNs are typically 
+              used for images.</p>
+        <p>Here is a typical CNN model architecture:</p>
+        <p><img class='center' src="https://camo.githubusercontent.com/b4c81c8d9f2915637d0ed7e40eae2837e38178c4/68747470733a2f2f616465736870616e6465332e6769746875622e696f2f6173736574732f5461626c652e706e67" alt=""></p>
+
+          <h2 id="convolutional-layer">Convolutional Layer</h2>
+
+          <p>The convolutional layer is the part of the CNN that does the 'heavy lifting'. 
+              It consists of a series of learnable filters (kernels). Each filter is set to a 
+              certain small size (e.g. 3x3 for a 2D BW image, or 1x3 for a 1D vector). 
+              During the pass through the layer, the filter is slid (convolved) across the width and 
+              height of the input. As the filter is slid, an activation or feature map is produced 
+              that gives the response of the filter at every spatial position. The network will learn 
+              filters that activate when they see a specific feature, such as edges if the input is an 
+              image. Each convolutional layer has multiple filters and each filter produces a separate 
+              activation or feature map. These activation maps are stacked together and passed to the next layer. </p>
+          <p>For example, consider a 5 by 5 image (green) which only has values 0 or 1 and a 3 by 3 filter (yellow):  </p>
+          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-13-pm.png?w=127&amp;h=115" alt="image"> 
+              <br><img class='center' src="https://ujwlkarn.files.wordpress.com/2016/07/screen-shot-2016-07-24-at-11-25-24-pm.png?w=74&amp;h=64" alt="filter"></p>
+          <p>The convolution of the filter across the image would look like this:</p>
+          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/07/convolution_schematic.gif?w=268&amp;h=196" alt="image"></p>
+          <p>The filter is slid across the image by 1 pixel. At every position, the filter is first 
+              multiplied elementwise with the pixels of the image and then the resulting values are summed 
+              up to get a final integer which is then a single element of the output matrix (feature map). 
+              Different values in the filter will create a different output feature map. 
+              <a href="https://keras.io/layers/convolutional/">Here is the keras documentation 
+                  for convolutional layers</a> </p>
+          <p>Here is a helpful graphic that shows the result of two different filters being convolved across an image:</p>
+          <p><img class='center'  src="https://ujwlkarn.files.wordpress.com/2016/08/giphy.gif?w=400h=300" alt="image"></p>
+          <p>An important difference between CNNs and MLPs (Dense layers): An MLP/Dense/Fully connected layer learns global patterns in the input feature space, wheras a CNN/convolutional layer learns local patterns. If we were examining images, a Dense layer would learn patterns that involve all pixels of the image, while a convolutional layer would learn patterns within small windows of the image. </p>
+          <p>In Keras, a convolutional layer is added by using a Conv1D (for 1D convolutions) or Conv2D (for 2D convolutions) layer:</p>
+          <div class="code">
+          <pre><code class="lang-python">keras.layers.Conv1D(filters, kernel_size, <span class="hljs-attr">strides=1,</span> <span class="hljs-attr">padding='valid',</span> <span class="hljs-attr">data_format='channels_last',</span> <span class="hljs-attr">dilation_rate=1,</span> <span class="hljs-attr">activation=None,</span> <span class="hljs-attr">use_bias=True,</span> <span class="hljs-attr">kernel_initializer='glorot_uniform',</span> <span class="hljs-attr">bias_initializer='zeros',</span> <span class="hljs-attr">kernel_regularizer=None,</span> <span class="hljs-attr">bias_regularizer=None,</span> <span class="hljs-attr">activity_regularizer=None,</span> <span class="hljs-attr">kernel_constraint=None,</span> <span class="hljs-attr">bias_constraint=None)</span>
+
+keras.layers.Conv2D(filters, kernel_size, <span class="hljs-attr">strides=(1,</span> <span class="hljs-number">1</span>), <span class="hljs-attr">padding='valid',</span> <span class="hljs-attr">data_format=None,</span> <span class="hljs-attr">dilation_rate=(1,</span> <span class="hljs-number">1</span>), <span class="hljs-attr">activation=None,</span> <span class="hljs-attr">use_bias=True,</span> <span class="hljs-attr">kernel_initializer='glorot_uniform',</span> <span class="hljs-attr">bias_initializer='zeros',</span> <span class="hljs-attr">kernel_regularizer=None,</span> <span class="hljs-attr">bias_regularizer=None,</span> <span class="hljs-attr">activity_regularizer=None,</span> <span class="hljs-attr">kernel_constraint=None,</span> <span class="hljs-attr">bias_constraint=None)</span>
+</code></pre></div>
+          
+        <p>The arguments we care about for these layers are:</p>
+        <ul>
+        <li>filters - the number of filters used in the layer</li>
+        <li>kernel_size - the size of the filters</li>
+        <li>strides - typically = 1, maybe 2, the number of &#39;pixels&#39;/&#39;elements&#39; the filter shifts over when convolving the image</li>
+        <li>padding - the amount of empty zero padding around the image, sometimes it is helpful to border the image with 0s, default is no padding</li>
+        <li>activation - we can combine the conv layer and relu layer in one step by setting this equal to &#39;relu&#39;</li>
+        </ul>
+
+        <h2 id="relu-layer">ReLU Layer</h2>
+        <p>A ReLU layer is typically used after every convolution layer. In keras it can be added by setting the activation argument to &#39;relu&#39;. ReLU stands for rectified linear unit and it is a non-linear operation defined by max(zero, input). Essentially it sets all negative &#39;pixels&#39;/&#39;elements&#39; of the activation/feature maps to 0. Its purpose is to introduce non-linearity into the data, as real life data is likely to be non-linear. The convolution process is linear, so the ReLU function helps account for the non-linearity.</p>
+        <p>This image may help visualize what the ReLU step is doing:</p>
+        <p><img class="center" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-18-19-pm.png?w=748" alt=""></p>
+        <p>Other activation functions can be used besides ReLU, but ReLU has been found to typically perform the best. </p>
+
+        <h2 id="pooling-layer">Pooling Layer</h2>
+        <p>The function of a pooling layer is to do dimensionality reduction on the convolution layer output. This helps reduce the amount of computation necessary, as well as prevent overfitting. It is common to insert a pooling layer after several convolutional layers. </p>
+        <p>Two types of pooling layers are Max and Average. Max pooling will take the largest number in a defined spatial neighborhood. Average pooling will take the average value of the spatial neighborhood. Max pooling is the type of pooling typically used, as it has been found to perform better. </p>
+        <p>There are also Global versions of both of these types of pooling. Global (average or max) pooling is a more extreme method of dimensionality reduction, it averages the input into one value per feature map. A Global pooling layer is often added towards the end of a model, right before the Dense output layer. <a href="https://keras.io/layers/pooling/">Here is the keras documentation on Pooling layers</a>.</p>
+        <p>Here's an example of how the Max and Sum (another type of pooling) layers look:</p>
+        <p><img class="center" src="https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-07-at-6-11-53-pm.png?w=748" alt=""></p>
+
+          <p>In Keras pooling layers are added with the following functions:</p>
+          <pre><code class="lang-python">keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.MaxPooling1D</span>(pool_size=<span class="hljs-number">2</span>, strides=None, <span class="hljs-attribute">padding</span>=<span class="hljs-string">'valid'</span>)
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.MaxPooling2D</span>(pool_size=(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>), strides=None, <span class="hljs-attribute">padding</span>=<span class="hljs-string">'valid'</span>, data_format=None)
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.AveragePooling1D</span>(pool_size=<span class="hljs-number">2</span>, strides=None, <span class="hljs-attribute">padding</span>=<span class="hljs-string">'valid'</span>)
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.AveragePooling2D</span>(pool_size=(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>), strides=None, <span class="hljs-attribute">padding</span>=<span class="hljs-string">'valid'</span>, data_format=None)
+</code></pre>
+          <p>Global Pooling layers:</p>
+          <pre><code class="lang-python">keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.GlobalMaxPooling1D</span>()
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.GlobalAveragePooling1D</span>()
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.GlobalMaxPooling2D</span>(data_format=None)
+keras<span class="hljs-selector-class">.layers</span><span class="hljs-selector-class">.GlobalAveragePooling2D</span>(data_format=None)
+</code></pre>
+    <p>The argument we care about is:</p>
+    <ul>
+    <li>pool_size - size of the window to &#39;summarize&#39;</li>
+    </ul>
+    <p>Note that the Global pooling layers do not have any input arguments (except data_format for the 2D ones).</p>
+    <p>Please see the Keras documentation for arguments not covered here. </p>
+    <p>Now we will cover an example provided by the Keras documentation for the creation of a 1D CNN. The example can be found <a href="https://keras.io/getting-started/sequential-model-guide/">here</a>.</p>
+
+          <h2 id="1d-convolution-example">1D Convolution example</h2>
+          <p>Here is the code for a complete example of a 1D CNN. We will go through it below. </p>
+<pre><code class="lang-python">from keras.<span class="hljs-keyword">models</span> import Sequential
+from keras.layers import Dense, Dropout
+from keras.layers import Embedding
+from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
+
+seq_length = <span class="hljs-number">64</span>
+
+<span class="hljs-keyword">model</span> = Sequential()
+<span class="hljs-keyword">model</span>.add(Conv1D(<span class="hljs-number">64</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>, input_shape=(seq_length, <span class="hljs-number">100</span>)))
+<span class="hljs-keyword">model</span>.add(Conv1D(<span class="hljs-number">64</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+<span class="hljs-keyword">model</span>.add(MaxPooling1D(<span class="hljs-number">3</span>))
+<span class="hljs-keyword">model</span>.add(Conv1D(<span class="hljs-number">128</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+<span class="hljs-keyword">model</span>.add(Conv1D(<span class="hljs-number">128</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+<span class="hljs-keyword">model</span>.add(GlobalAveragePooling1D())
+<span class="hljs-keyword">model</span>.add(Dropout(<span class="hljs-number">0.5</span>))
+<span class="hljs-keyword">model</span>.add(Dense(<span class="hljs-number">1</span>, activation=<span class="hljs-string">'sigmoid'</span>))
+
+<span class="hljs-keyword">model</span>.compile(loss=<span class="hljs-string">'binary_crossentropy'</span>,
+              optimizer=<span class="hljs-string">'rmsprop'</span>,
+              metrics=[<span class="hljs-string">'accuracy'</span>])
+
+<span class="hljs-keyword">model</span>.fit(x_train, y_train, batch_size=<span class="hljs-number">16</span>, epochs=<span class="hljs-number">10</span>)
+score = <span class="hljs-keyword">model</span>.evaluate(x_test, y_test, batch_size=<span class="hljs-number">16</span>)
+</code></pre>
+<ol>
+<li><p>Import the needed libraries.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> keras.models <span class="hljs-keyword">import</span> Sequential
+<span class="hljs-keyword">from</span> keras.layers <span class="hljs-keyword">import</span> Dense, Dropout
+<span class="hljs-keyword">from</span> keras.layers <span class="hljs-keyword">import</span> Conv1D, GlobalAveragePooling1D, MaxPooling1D
+</code></pre>
+</li>
+<li><p>Define the type of model and a variable for the length of the input data. This is an example for 1 dimensional sequence classification so it is referred to as sequence length.</p>
+<pre><code class="lang-python"><span class="hljs-attr">seq_length</span> = <span class="hljs-number">64</span>
+<span class="hljs-attr">model</span> = Sequential()
+</code></pre>
+</li>
+<li>Add the first layer. This is a 1D convolutional layer. This layer is using 64 filters 
+    (kernels) and a kernel size of 3. We set the activation function we want to apply after the convolution to 'relu'
+    - this defines the ReLU layer. Because it is the first layer we have to define the input shape of the data, 
+    this can be a little tricky. The 1D conv function was designed to work with sequential data, so the order of 
+    the values can be confusing. The first number represents the number of 'time steps' you have, in this 
+    case 64. The second number represents the number of features you have measures for for each time step, 
+    in this case 100. When you have a single vector of data per input (e.g. an LB spectrum with 50 eigenvalues), 
+    you likely want the last value to be 1 (ex. shape would be (50, 1)).
+    <pre><code class="lang-python">model.add(Conv1D(<span class="hljs-number">64</span>, <span class="hljs-number">3</span>, activation='relu', input_shape=(seq_length, <span class="hljs-number">100</span>)))
+</code></pre>
+</li>
+<li>Add another 1D convolutional layer with 64 filters and a kernal size of 3. Add a Relu activation layer after it.
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(Conv1D(<span class="hljs-number">64</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+</code></pre>
+</li>
+<li>Add a Max pooling layer with a 'window' of size 3 to do dimensionality reduction
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(MaxPooling1D(<span class="hljs-number">3</span>))
+</code></pre>
+</li>
+<li>Add another 2 1D convolutional layers, both with 128 filters and both with ReLU activation layers after. 
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(Conv1D(<span class="hljs-number">128</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+model.<span class="hljs-keyword">add</span>(Conv1D(<span class="hljs-number">128</span>, <span class="hljs-number">3</span>, activation=<span class="hljs-string">'relu'</span>))
+</code></pre>
+</li>
+<li>Add a Global average pooling layer to do more dimensionality reduction.
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(GlobalAveragePooling1D())
+</code></pre>
+</li>
+<li>Add a dropout layer to prevent overfitting.
+    <pre><code class="lang-python"><span class="hljs-selector-tag">model</span><span class="hljs-selector-class">.add</span>(<span class="hljs-selector-tag">Dropout</span>(0<span class="hljs-selector-class">.5</span>))
+</code></pre>
+</li>
+<li>Add the output layer. This layer is a Dense (fully connected) layer. It only has 1 node as this is a binary classification model. 
+    The activation function used is sigmoid. Sigmoid is the most appropriate function to use for a binary 
+    classification problem because it forces the output to be between 0 and 1, making it easy to set a threshold 
+    (i.e. .5) for classification.
+    <pre><code class="lang-python">model.<span class="hljs-keyword">add</span>(Dense(<span class="hljs-number">1</span>, activation=<span class="hljs-string">'sigmoid'</span>))
+</code></pre>
+</li>
+<li>Compile the model. Because this is a binary classification model we use the loss function 'binary_crossentropy'. The optimizer chosen is 'rmsprop'
+    and we want it to output the accuracy metric.
+    <pre><code class="lang-python"><span class="hljs-keyword">model</span>.compile(loss=<span class="hljs-string">'binary_crossentropy'</span>,
+      optimizer=<span class="hljs-string">'rmsprop'</span>,
+      metrics=[<span class="hljs-string">'accuracy'</span>])
+      </code></pre>
+</li>
+<li>Fit the model. This is what actually trains the model. We give it the input (training data) x_train and y_train. 
+    We ask it to run the training 10 times (epoch) and use a batch size of 16. This means it will see 16 inputs 
+    before updating the weights.
+    <pre><code class="lang-python">model.fit(x_train, y_train, batch_size=<span class="hljs-number">16</span>, epochs=<span class="hljs-number">10</span>)
+</code></pre>
+</li>
+<li>Last step is to check the accuracy of the model on some testing data that was kept out of training.
+    <pre><code class="lang-python"><span class="hljs-attr">score</span> = model.evaluate(x_test, y_test, batch_size=<span class="hljs-number">16</span>)
+</code></pre>
+</li>
+</ol>
+<p>That's it! You now know the basics of a CNN in Keras. A 2D CNN, such as for pictures, can have the same format. You would just use the 2D version of the functions and adjust the kernal size to be two dimensions etc. </p>
+<p><strong>Please continue on to <a href="5activationfunctions.html">Activation Functions</a>.</strong></p>
+
+          
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
