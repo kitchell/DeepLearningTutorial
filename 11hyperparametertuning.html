@@ -81,6 +81,7 @@
       <div class="container-fluid">
   
 <h1 id="hyperparameter-tuning">Hyperparameter Tuning</h1>
+          <hr>
 <p>A way to improve your model and avoid overfitting is to tune the hyperparameters. Hyperparameters are the parameters that are not learned within the model. These are the choices you have to make when defining the model, like how many hidden nodes to use?, how much dropout to add?, which activation function? etc. There are no set rules for choosing many of these hyperparameters, so it may be beneficial for you to test multiple combinations of each parameter. This can be done in many ways, such as through a grid search or random search. </p>
 <h2 id="grid-search">Grid Search</h2>
 <p>A grid search exhaustively tests all combinations of a grid of parameters selected. This can easily be implemented using the <code>GridSearchCV</code> function from sklearn. <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV">sklearn documentation</a>.</p>

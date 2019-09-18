@@ -81,6 +81,7 @@
       <div class="container-fluid">
   
 <h1 id="loss-functions-and-optimizers">Loss Functions and Optimizers</h1>
+          <hr>
 <p>When compiling your model you need to choose a loss function and an optimizer. The loss function is the quantity that will be minimized during training. The optimizer determines how the network will be updated based on the loss function. </p>
 <p>Example compile step:</p>
 <pre><code class="lang-python"><span class="hljs-keyword">model</span>.compile(optimizer=<span class="hljs-string">'rmsprop'</span>, loss=<span class="hljs-string">'binary_crossentropy'</span>, metrics=[<span class="hljs-string">'accuracy'</span>])

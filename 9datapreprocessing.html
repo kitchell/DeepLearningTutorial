@@ -81,6 +81,7 @@
       <div class="container-fluid">
   
 <h1 id="data-preprocessing">Data Preprocessing</h1>
+          <hr>
 <p>Before feeding your data into a neural network there is some data preparation that must be done. The exact preprocessing that must be done will be different for each domain but we can cover the basics here. </p>
 <h2 id="vectorization">Vectorization</h2>
 <p>All inputs and targets (data and labels) fed into a neural network must be tensors of floating point data. The step of turning the data into a tensor is called <em>vectorization</em>. A tensor is a multidimensional array, a generalization of matrices to an arbitrary number of dimensions. For example, a matrix is a 2D tensor, a vector is a 1D tensor, a scalar is a 0D tensor etc. In python, these are represented using numpy arrays. Your input data should be in a numpy array with the data format &#39;float32&#39;. Data labels can be vectorized using one-hot encoding, as we have seen already. </p>
